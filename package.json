@@ -1,6 +1,6 @@
 {
   "name": "@dorafactory/maci-sdk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "SDK for interacting with maci",
   "keywords": [
     "maci",
@@ -23,16 +23,6 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "source": "./src/index.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    },
-    "./types": "./src/types/index.ts",
-    "./client": "./src/indexer.ts",
-    "./const": "./src/libs/const.ts"
-  },
   "files": [
     "dist",
     "src"
