@@ -124,7 +124,6 @@ async function main() {
     maxVoter: '5',
     maxOption: '5',
     circuitType: MaciCircuitType.IP1V,
-    certSystemType: MaciCertSystemType.GROTH16,
     whitelistBackendPubkey: 'AoYo/zENN/JquagPdG0/NMbWBBYxOM8BVN677mBXJKJQ',
     whitelistEcosystem: 'cosmoshub',
     whitelistSnapshotHeight: '0',

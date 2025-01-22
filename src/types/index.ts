@@ -1,8 +1,4 @@
 import { FetchOptions } from '../libs/http/http';
-import { DirectSecp256k1HdWallet } from '@cosmjs/proto-signing';
-import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
-import { MaciClient } from '../libs/contract/ts/Maci.client';
-import { RegistryClient } from '../libs/contract/ts/Registry.client';
 
 export type ClientParams = {
   network: 'mainnet' | 'testnet';

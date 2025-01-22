@@ -45,9 +45,6 @@ export type CreateMaciRoundParams = {
 
 export type CreateOracleMaciRoundParams = {
   operatorPubkey: string;
-  certSystemType: MaciCertSystemType;
-  feegrantOperator: string;
-  whitelistBackendPubkey: string;
   whitelistEcosystem: string;
   whitelistSnapshotHeight: string;
   whitelistVotingPowerArgs: {
@@ -55,4 +52,6 @@ export type CreateOracleMaciRoundParams = {
     slope: string;
     threshold: string;
   };
+  whitelistBackendPubkey?: string;
+  feegrantOperator?: string;
 } & CreateRoundParams;

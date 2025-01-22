@@ -147,9 +147,12 @@ export interface NetworkConfig {
   rpcEndpoint: string;
   restEndpoint: string;
   apiEndpoint: string;
+  certificateApiEndpoint: string;
   registryAddress: string;
   maciCodeId: number;
   oracleCodeId: number;
+  oracleWhitelistBackendPubkey: string;
+  oracleFeegrantOperator: string;
 }
 
 export function getDefaultParams(
@@ -163,10 +166,14 @@ export function getDefaultParams(
         rpcEndpoint: 'https://vota-rpc.dorafactory.org',
         restEndpoint: 'https://vota-rest.dorafactory.org',
         apiEndpoint: 'https://vota-api.dorafactory.org',
+        certificateApiEndpoint: 'https://vota-certificate-api.dorafactory.org',
         registryAddress:
           'dora1smg5qp5trjdkcekdjssqpjehdjf6n4cjss0clyvqcud3t3u3948s8rmgg4',
-        maciCodeId: 26,
-        oracleCodeId: 101,
+        maciCodeId: 106,
+        oracleCodeId: 111,
+        oracleWhitelistBackendPubkey:
+          'A61YtCv2ibMZmDeM02nEElil8wlHx1tLKogBk5dPgf/Q',
+        oracleFeegrantOperator: 'dora16s9tljk8dy9ae335yvyzlm8gvkypx9228q8pq8',
       };
     case 'testnet':
       return {
@@ -175,10 +182,15 @@ export function getDefaultParams(
         rpcEndpoint: 'https://vota-testnet-rpc.dorafactory.org',
         restEndpoint: 'https://vota-testnet-rest.dorafactory.org',
         apiEndpoint: 'https://vota-testnet-api.dorafactory.org',
+        certificateApiEndpoint:
+          'https://vota-testnet-certificate-api.dorafactory.org',
         registryAddress:
           'dora13c8aecstyxrhax9znvvh5zey89edrmd2k5va57pxvpe3fxtfsfeqlhsjnd',
-        maciCodeId: 106,
+        maciCodeId: 107,
         oracleCodeId: 110,
+        oracleWhitelistBackendPubkey:
+          'AoYo/zENN/JquagPdG0/NMbWBBYxOM8BVN677mBXJKJQ',
+        oracleFeegrantOperator: 'dora1xp0twdzsdeq4qg3c64v66552deax8zmvq4zw78',
       };
   }
 }
