@@ -1,4 +1,21 @@
 import { FetchOptions } from '../libs/http/http';
+export type * from '../libs/contract/types';
+
+export enum MaciCircuitType {
+  IP1V = '0',
+  QV = '1',
+}
+
+export enum MaciCertSystemType {
+  GROTH16 = 'groth16',
+  PLONK = 'plonk',
+}
+
+export enum MaciRoundType {
+  MACI = '0',
+  AMACI = '1',
+  ORACLE_MACI = '2',
+}
 
 export type ClientParams = {
   network: 'mainnet' | 'testnet';

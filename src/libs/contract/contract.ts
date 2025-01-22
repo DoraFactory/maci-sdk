@@ -26,11 +26,10 @@ import {
   CreateAMaciRoundParams,
   CreateMaciRoundParams,
   CreateOracleMaciRoundParams,
-  MaciCertSystemType,
-  MaciRoundType,
 } from './types';
 import { getContractParams, parsePubkey } from './utils';
 import { QTR_LIB } from './vars';
+import { MaciRoundType, MaciCertSystemType } from '../../types';
 
 export const prefix = 'dora';
 

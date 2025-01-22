@@ -1,14 +1,10 @@
-import { MaciClient } from '../src/maci';
+import { MaciClient, MaciCircuitType } from '../src';
 import { Secp256k1HdWallet } from '@cosmjs/amino';
 import {
   DirectSecp256k1HdWallet,
   DirectSecp256k1Wallet,
 } from '@cosmjs/proto-signing';
 import dotenv from 'dotenv';
-import {
-  MaciCertSystemType,
-  MaciCircuitType,
-} from '../src/libs/contract/types';
 
 dotenv.config();
 async function main() {

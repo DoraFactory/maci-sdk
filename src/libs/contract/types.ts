@@ -1,24 +1,9 @@
 import { Whitelist as RegistryWhitelist } from './ts/Registry.types';
 import { Whitelist as MaciWhitelist } from './ts/Maci.types';
 import { OfflineSigner } from '@cosmjs/proto-signing';
+import { MaciCircuitType, MaciCertSystemType } from '../../types';
 
-export enum MaciCircuitType {
-  IP1V = '0',
-  QV = '1',
-}
-
-export enum MaciCertSystemType {
-  GROTH16 = 'groth16',
-  PLONK = 'plonk',
-}
-
-export enum MaciRoundType {
-  MACI = '0',
-  AMACI = '1',
-  ORACLE_MACI = '2',
-}
-
-export interface CreateRoundParams {
+export type CreateRoundParams = {
   signer: OfflineSigner;
   title: string;
   description?: string;
@@ -28,7 +13,7 @@ export interface CreateRoundParams {
   maxVoter: string;
   maxOption: string;
   circuitType: MaciCircuitType;
-}
+};
 
 export type CreateAMaciRoundParams = {
   operator: string;

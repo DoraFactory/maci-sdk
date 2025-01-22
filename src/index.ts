@@ -1,5 +1,6 @@
 export * from './libs';
 export type * from './types';
+export * from './types';
 export * from './libs/const';
 export { MaciClient } from './maci';
 export { Http } from './libs/http';

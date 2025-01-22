@@ -1,4 +1,8 @@
-import { MaciCertSystemType, MaciCircuitType, MaciRoundType } from './types';
+import {
+  MaciCertSystemType,
+  MaciCircuitType,
+  MaciRoundType,
+} from '../../types';
 import { CIRCUIT_INFO } from './vars';
 
 type MixedData<T> = T | Array<MixedData<T>> | { [key: string]: MixedData<T> };
