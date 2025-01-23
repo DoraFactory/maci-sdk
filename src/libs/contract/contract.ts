@@ -27,9 +27,10 @@ import {
   CreateMaciRoundParams,
   CreateOracleMaciRoundParams,
 } from './types';
-import { getContractParams, parsePubkey } from './utils';
+import { getContractParams } from './utils';
 import { QTR_LIB } from './vars';
 import { MaciRoundType, MaciCertSystemType } from '../../types';
+import { decompressPublicKey } from '../../utils';
 
 export const prefix = 'dora';
 
@@ -131,7 +132,7 @@ export class Contract {
     const [{ address }] = await signer.getAccounts();
     const client = await createContractClientByWallet(this.rpcEndpoint, signer);
     const { x: operatorPubkeyX, y: operatorPubkeyY } =
-      parsePubkey(operatorPubkey);
+      decompressPublicKey(operatorPubkey);
     const {
       parameters,
       groth16ProcessVkey,
@@ -200,7 +201,7 @@ export class Contract {
     const [{ address }] = await signer.getAccounts();
     const client = await createContractClientByWallet(this.rpcEndpoint, signer);
     const { x: operatorPubkeyX, y: operatorPubkeyY } =
-      parsePubkey(operatorPubkey);
+      decompressPublicKey(operatorPubkey);
     const {
       parameters,
       groth16ProcessVkey,

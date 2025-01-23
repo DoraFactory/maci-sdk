@@ -10,3 +10,4 @@ export { Circuit } from './libs/query';
 export { Operator } from './libs/query';
 export { Proof } from './libs/query';
 export { Transaction } from './libs/query';
+export * from './utils';

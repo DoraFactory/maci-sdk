@@ -152,28 +152,3 @@ export function getContractParams(
       };
   }
 }
-
-/**
- * Converts a hexadecimal string to a decimal string.
- * @param hexString - The hexadecimal string to convert.
- * @returns The decimal string representation of the input.
- */
-function hexToDecimalString(hexString: string) {
-  const decimalString = BigInt('0x' + hexString).toString(10);
-  return decimalString;
-}
-
-/**
- * Parses a public key string into its x and y coordinates.
- * @param publickKey - The public key string to parse (128 characters long).
- * @returns An object containing the x and y coordinates as decimal strings.
- */
-export function parsePubkey(publickKey: string) {
-  const x = publickKey.slice(0, 64);
-  const y = publickKey.slice(64);
-
-  return {
-    x: hexToDecimalString(x),
-    y: hexToDecimalString(y),
-  };
-}
