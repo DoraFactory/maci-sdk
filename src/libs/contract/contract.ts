@@ -39,17 +39,23 @@ export class Contract {
   public registryAddress: string;
   public maciCodeId: number;
   public oracleCodeId: number;
+  public feegrantOperator: string;
+  public whitelistBackendPubkey: string;
 
   constructor({
     rpcEndpoint,
     registryAddress,
     maciCodeId,
     oracleCodeId,
+    feegrantOperator,
+    whitelistBackendPubkey,
   }: ContractParams) {
     this.rpcEndpoint = rpcEndpoint;
     this.registryAddress = registryAddress;
     this.maciCodeId = maciCodeId;
     this.oracleCodeId = oracleCodeId;
+    this.feegrantOperator = feegrantOperator;
+    this.whitelistBackendPubkey = whitelistBackendPubkey;
   }
 
   async createAMaciRound({
@@ -190,11 +196,9 @@ export class Contract {
     maxVoter,
     maxOption,
     circuitType,
-    whitelistBackendPubkey,
     whitelistEcosystem,
     whitelistSnapshotHeight,
     whitelistVotingPowerArgs,
-    feegrantOperator,
   }: CreateOracleMaciRoundParams) {
     const start_time = (startVoting.getTime() * 1_000_000).toString();
     const end_time = (endVoting.getTime() * 1_000_000).toString();
@@ -236,14 +240,14 @@ export class Contract {
         plonk_process_vkey: plonkProcessVkey,
         plonk_tally_vkey: plonkTallyVkey,
         max_vote_options: maxOption,
-        whitelist_backend_pubkey: whitelistBackendPubkey,
+        whitelist_backend_pubkey: this.whitelistBackendPubkey,
         whitelist_ecosystem: whitelistEcosystem,
         whitelist_snapshot_height: whitelistSnapshotHeight,
         whitelist_voting_power_args: whitelistVotingPowerArgs,
         circuit_type: maciVoteType,
         certification_system: maciCertSystem,
         qtr_lib: QTR_LIB,
-        feegrant_operator: feegrantOperator,
+        feegrant_operator: this.feegrantOperator,
       },
       '[Oracle MACI]' + title,
       'auto'

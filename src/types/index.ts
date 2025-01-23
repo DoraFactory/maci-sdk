@@ -27,6 +27,8 @@ export type ClientParams = {
   oracleCodeId?: number;
   customFetch?: typeof fetch;
   defaultOptions?: FetchOptions;
+  feegrantOperator?: string;
+  whitelistBackendPubkey?: string;
 };
 
 export type ContractParams = {
@@ -34,6 +36,8 @@ export type ContractParams = {
   registryAddress: string;
   maciCodeId: number;
   oracleCodeId: number;
+  whitelistBackendPubkey: string;
+  feegrantOperator: string;
 };
 
 export type TransactionType = {

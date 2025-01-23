@@ -36,6 +36,9 @@ export class MaciClient {
   public indexer: Indexer;
   public contract: Contract;
 
+  public feegrantOperator: string;
+  public whitelistBackendPubkey: string;
+
   /**
    * @constructor
    * @param {ClientParams} params - The parameters for the Maci Client instance.
@@ -50,6 +53,8 @@ export class MaciClient {
     oracleCodeId,
     customFetch,
     defaultOptions,
+    feegrantOperator,
+    whitelistBackendPubkey,
   }: ClientParams) {
     const defaultParams = getDefaultParams(network);
 
@@ -59,6 +64,10 @@ export class MaciClient {
     this.registryAddress = registryAddress || defaultParams.registryAddress;
     this.maciCodeId = maciCodeId || defaultParams.maciCodeId;
     this.oracleCodeId = oracleCodeId || defaultParams.oracleCodeId;
+    this.feegrantOperator =
+      feegrantOperator || defaultParams.oracleFeegrantOperator;
+    this.whitelistBackendPubkey =
+      whitelistBackendPubkey || defaultParams.oracleWhitelistBackendPubkey;
 
     this.http = new Http(
       this.apiEndpoint,
@@ -77,6 +86,8 @@ export class MaciClient {
       registryAddress: this.registryAddress,
       maciCodeId: this.maciCodeId,
       oracleCodeId: this.oracleCodeId,
+      feegrantOperator: this.feegrantOperator,
+      whitelistBackendPubkey: this.whitelistBackendPubkey,
     });
   }
 

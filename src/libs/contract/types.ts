@@ -30,13 +30,13 @@ export type CreateMaciRoundParams = {
 
 export type CreateOracleMaciRoundParams = {
   operatorPubkey: string;
-  whitelistEcosystem: string;
+  whitelistEcosystem: 'cosmoshub' | 'doravota';
   whitelistSnapshotHeight: string;
   whitelistVotingPowerArgs: {
-    mode: string;
+    mode: 'slope' | 'threshold';
     slope: string;
     threshold: string;
   };
-  whitelistBackendPubkey?: string;
-  feegrantOperator?: string;
+  // whitelistBackendPubkey?: string;
+  // feegrantOperator?: string;
 } & CreateRoundParams;

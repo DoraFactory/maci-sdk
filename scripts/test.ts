@@ -120,7 +120,6 @@ async function main() {
     maxVoter: '5',
     maxOption: '5',
     circuitType: MaciCircuitType.IP1V,
-    whitelistBackendPubkey: 'AoYo/zENN/JquagPdG0/NMbWBBYxOM8BVN677mBXJKJQ',
     whitelistEcosystem: 'cosmoshub',
     whitelistSnapshotHeight: '0',
     whitelistVotingPowerArgs: {
@@ -128,7 +127,6 @@ async function main() {
       slope: '1000000',
       threshold: '1000000',
     },
-    feegrantOperator: 'dora1cw3wf6lxddx498ga9v4jdrragf2zhjx455cku3',
   });
   console.log('newRound:', newRound);
 
