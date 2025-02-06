@@ -148,6 +148,15 @@ export function getContractParams(
         // plonkTallyVkey,
       };
     case MaciRoundType.ORACLE_MACI:
+      if (circuitType === MaciCircuitType.IP1V) {
+        groth16ProcessVkey =
+          CIRCUIT_INFO['9-4-3-625']['groth16'].process_1p1v_vkey;
+        groth16TallyVkey = CIRCUIT_INFO['9-4-3-625']['groth16'].tally_1p1v_vkey;
+      } else if (circuitType === MaciCircuitType.QV) {
+        groth16ProcessVkey =
+          CIRCUIT_INFO['9-4-3-625']['groth16'].process_qv_vkey;
+        groth16TallyVkey = CIRCUIT_INFO['9-4-3-625']['groth16'].tally_qv_vkey;
+      }
       return {
         parameters: CIRCUIT_INFO['9-4-3-625'].parameter,
         groth16ProcessVkey,
