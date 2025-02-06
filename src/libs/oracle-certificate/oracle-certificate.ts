@@ -13,7 +13,7 @@ import {
 import { Http } from '../http';
 import {
   Round,
-  Account,
+  UserAccount,
   Circuit,
   Operator,
   Proof,

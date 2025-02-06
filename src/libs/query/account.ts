@@ -3,7 +3,7 @@ import { BalanceResponse } from '../../types';
 import { handleError, ErrorType } from '../errors';
 import { ERROR } from '../errors/types';
 
-export class Account {
+export class UserAccount {
   public http: Http;
 
   constructor(http: Http) {

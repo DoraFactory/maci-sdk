@@ -14,7 +14,7 @@ import { IndexerParams } from './types';
 import { Http } from '../http';
 import {
   Round,
-  Account,
+  UserAccount,
   Circuit,
   Operator,
   Proof,
@@ -32,7 +32,7 @@ export class Indexer {
 
   public http: Http;
   public round: Round;
-  public account: Account;
+  public account: UserAccount;
   public circuit: Circuit;
   public operator: Operator;
   public proof: Proof;
@@ -55,7 +55,7 @@ export class Indexer {
     this.registryAddress = registryAddress;
 
     this.round = new Round(this.http);
-    this.account = new Account(this.http);
+    this.account = new UserAccount(this.http);
     this.circuit = new Circuit(this.http);
     this.operator = new Operator(this.http, this.registryAddress);
     this.proof = new Proof(this.http);

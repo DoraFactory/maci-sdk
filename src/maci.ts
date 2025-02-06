@@ -19,6 +19,7 @@ import {
   CreateOracleMaciRoundParams,
 } from './libs/contract/types';
 import { OfflineSigner } from '@cosmjs/proto-signing';
+import { Circom } from './libs/circom';
 
 /**
  * @class MaciClient
@@ -35,6 +36,7 @@ export class MaciClient {
   public http: Http;
   public indexer: Indexer;
   public contract: Contract;
+  public circom: Circom;
 
   public feegrantOperator: string;
   public whitelistBackendPubkey: string;
@@ -89,6 +91,7 @@ export class MaciClient {
       feegrantOperator: this.feegrantOperator,
       whitelistBackendPubkey: this.whitelistBackendPubkey,
     });
+    this.circom = new Circom({ network });
   }
 
   async oracleMaciClient({

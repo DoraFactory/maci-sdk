@@ -331,4 +331,8 @@ export class Contract {
       contractAddress,
     });
   }
+
+  async contractClient({ signer }: { signer: OfflineSigner }) {
+    return createContractClientByWallet(this.rpcEndpoint, signer);
+  }
 }

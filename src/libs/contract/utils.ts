@@ -150,8 +150,8 @@ export function getContractParams(
     case MaciRoundType.ORACLE_MACI:
       return {
         parameters: CIRCUIT_INFO['9-4-3-625'].parameter,
-        groth16ProcessVkey: CIRCUIT_INFO['9-4-3-625']['groth16'].process_vkey,
-        groth16TallyVkey: CIRCUIT_INFO['9-4-3-625']['groth16'].tally_vkey,
+        groth16ProcessVkey,
+        groth16TallyVkey,
         plonkProcessVkey: null,
         plonkTallyVkey: null,
         maciVoteType,
