@@ -1,9 +1,4 @@
-import {
-  BaseError,
-  HttpError,
-  GraphQLError,
-  ParseError,
-} from '../errors';
+import { BaseError, HttpError, GraphQLError, ParseError } from '../errors';
 
 export type FetchOptions = RequestInit & {
   next?: {
@@ -31,11 +26,12 @@ export class Http {
     return this.customFetch || fetch;
   }
 
-  async fetch(url: string): Promise<Response> {
+  async fetch(url: string, options?: any): Promise<Response> {
     try {
       const fetchFn = this.getFetch();
       const response = await fetchFn(url, {
         ...this.defaultOptions,
+        ...options,
       });
 
       if (!response.ok) {

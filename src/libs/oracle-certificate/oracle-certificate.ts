@@ -1,49 +1,9 @@
-import {
-  BalanceResponse,
-  RoundResponse,
-  RoundsResponse,
-  OperatorResponse,
-  OperatorsResponse,
-  CircuitResponse,
-  TransactionResponse,
-  TransactionsResponse,
-  CircuitsResponse,
-  ProofResponse,
-} from '../../types';
 import { Http } from '../http';
 import {
-  Round,
-  UserAccount,
-  Circuit,
-  Operator,
-  Proof,
-  Transaction,
-} from '../query';
-import { handleError, ErrorType } from '../errors';
-import { ERROR } from '../errors/types';
-import { OracleCertificateParams } from './types';
-
-/**
- * @class Indexer
- * @description This class is used to interact with Maci Indexer.
- */
-export interface SignatureRequest {
-  address: string;
-  height: string;
-  contractAddress: string;
-  amount?: string;
-}
-
-export interface SignatureResponse {
-  code: number;
-  data?: {
-    signature: string;
-  };
-  error?: {
-    message: string;
-    type: string;
-  };
-}
+  OracleCertificateParams,
+  SignatureRequest,
+  SignatureResponse,
+} from './types';
 
 export class OracleCertificate {
   private certificateApiEndpoint: string;
@@ -55,36 +15,22 @@ export class OracleCertificate {
   }
 
   async sign(data: SignatureRequest): Promise<SignatureResponse> {
-    try {
-      const response = await fetch(
-        `${this.certificateApiEndpoint}/cosmoshub/sign`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      if (!response.ok) {
-        return {
-          code: response.status,
-          error: {
-            message: `Signature request failed: ${response.status} ${response.statusText}`,
-            type: 'error',
-          },
-        };
+    const response = await this.http.fetch(
+      `${this.certificateApiEndpoint}/${data.ecosystem}/sign`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          address: data.address,
+          height: data.height,
+          contractAddress: data.contractAddress,
+        }),
       }
+    );
+    const signatureData = await response.json();
 
-      const signatureData = await response.json();
-
-      return {
-        code: 200,
-        data: signatureData,
-      };
-    } catch (error) {
-      return handleError(error as ErrorType);
-    }
+    return signatureData;
   }
 }

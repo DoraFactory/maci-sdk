@@ -9,6 +9,7 @@ import {
   TransactionsResponse,
   CircuitsResponse,
   ProofResponse,
+  SignUpEventsResponse,
 } from '../../types';
 import { IndexerParams } from './types';
 import { Http } from '../http';
@@ -19,6 +20,7 @@ import {
   Operator,
   Proof,
   Transaction,
+  Event,
 } from '../query';
 
 /**
@@ -37,6 +39,7 @@ export class Indexer {
   public operator: Operator;
   public proof: Proof;
   public transaction: Transaction;
+  public event: Event;
 
   /**
    * @constructor
@@ -60,6 +63,7 @@ export class Indexer {
     this.operator = new Operator(this.http, this.registryAddress);
     this.proof = new Proof(this.http);
     this.transaction = new Transaction(this.http);
+    this.event = new Event(this.http);
   }
 
   /**
@@ -236,5 +240,19 @@ export class Indexer {
    */
   async getProofByContractAddress(address: string): Promise<ProofResponse> {
     return await this.proof.getProofByContractAddress(address);
+  }
+
+  /**
+   * @method getStateIdxByPubKey
+   * @description Get the state index of a specific public key.
+   * @param {string} contractAddress - The contract address.
+   * @param {bigint[]} pubKey - The public key.
+   * @returns {Promise<SignUpEventsResponse>} The sign up events response.
+   */
+  async getSignUpEventByPubKey(
+    contractAddress: string,
+    pubKey: bigint[]
+  ): Promise<SignUpEventsResponse> {
+    return await this.event.getSignUpEventByPubKey(contractAddress, pubKey);
   }
 }

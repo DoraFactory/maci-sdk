@@ -1,7 +1,11 @@
 import { Whitelist as RegistryWhitelist } from './ts/Registry.types';
 import { Whitelist as MaciWhitelist } from './ts/Maci.types';
 import { OfflineSigner } from '@cosmjs/proto-signing';
-import { MaciCircuitType, MaciCertSystemType } from '../../types';
+import {
+  MaciCircuitType,
+  MaciCertSystemType,
+  CertificateEcosystem,
+} from '../../types';
 
 export type CreateRoundParams = {
   signer: OfflineSigner;
@@ -30,7 +34,7 @@ export type CreateMaciRoundParams = {
 
 export type CreateOracleMaciRoundParams = {
   operatorPubkey: string;
-  whitelistEcosystem: 'cosmoshub' | 'doravota';
+  whitelistEcosystem: CertificateEcosystem;
   whitelistSnapshotHeight: string;
   whitelistVotingPowerArgs: {
     mode: 'slope' | 'threshold';

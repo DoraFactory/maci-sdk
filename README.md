@@ -23,11 +23,13 @@ const client = new MaciClient({
 ### Query Functions
 
 #### Query Account Balance
+
 ```typescript
 const balance = await client.balanceOf('dora1...');
 ```
 
 #### Query Round Information
+
 ```typescript
 // Query round by ID
 const round = await client.getRoundById('dora1...');
@@ -39,13 +41,22 @@ const rounds = await client.getRounds('first', 10);
 const roundsByStatus = await client.getRoundsByStatus('Created', 'first', 10);
 
 // Query rounds by circuit name
-const roundsByCircuit = await client.getRoundsByCircuitName('amaci-qv', 'first', 10);
+const roundsByCircuit = await client.getRoundsByCircuitName(
+  'amaci-qv',
+  'first',
+  10
+);
 
 // Query rounds by operator address
-const roundsByOperator = await client.getRoundsByOperator('dora1...', 'first', 10);
+const roundsByOperator = await client.getRoundsByOperator(
+  'dora1...',
+  'first',
+  10
+);
 ```
 
 #### Query Operator Information
+
 ```typescript
 // Query operator by address
 const operator = await client.getOperatorByAddress('dora1...');
@@ -55,6 +66,7 @@ const operators = await client.getOperators('first', 10);
 ```
 
 #### Query Circuit Information
+
 ```typescript
 // Query circuit by name
 const circuit = await client.getCircuitByName('amaci-qv');
@@ -64,6 +76,7 @@ const circuits = await client.getCircuits();
 ```
 
 #### Query Transaction Information
+
 ```typescript
 // Query transaction by hash
 const transaction = await client.getTransactionByHash('HASH...');
@@ -72,10 +85,15 @@ const transaction = await client.getTransactionByHash('HASH...');
 const transactions = await client.getTransactions('first', 10);
 
 // Query transactions by contract address
-const txByContract = await client.getTransactionsByContractAddress('dora1...', 'first', 10);
+const txByContract = await client.getTransactionsByContractAddress(
+  'dora1...',
+  'first',
+  10
+);
 ```
 
 #### Query Proof Information
+
 ```typescript
 const proof = await client.getProofByContractAddress('dora1...');
 ```
@@ -83,6 +101,7 @@ const proof = await client.getProofByContractAddress('dora1...');
 ### Contract Interactions
 
 #### Create New Oracle Maci Round
+
 ```typescript
 const wallet = await DirectSecp256k1Wallet.fromKey(
   Buffer.from(privateKey, 'hex'),
@@ -110,7 +129,8 @@ const newRound = await client.createOracleMaciRound({
 });
 ```
 
-**Note:** 
+**Note:**
+
 - The `operatorPubkey` is the public key of the operator. It is the compressed public key of the operator's private key.
 - The `whitelistEcosystem` is the ecosystem of the whitelist (e.g. 'cosmoshub'). Only wallet addresses that have staked tokens in the specified ecosystem before the snapshot block height will be eligible to become voters.
 - The `whitelistSnapshotHeight` is the snapshot block height for checking voter eligibility. The minimum valid height is 23,342,001. If set to "0", the round will evaluate the voter's stake at the time of signup.
@@ -123,6 +143,6 @@ const newRound = await client.createOracleMaciRound({
 
 For example, if a voter stakes 100000000 tokens and the slope value is 2500000, the voter will be assigned 40 voice credits.
 
-> The 1,000,000 reference value here is the precision of cosmoshub, which is 6 bits, and doravota, which is 18 bits, so when you want to pick doravota's staker as a whitelist and ask them to pledge 1DORA to convert 1vote, you need to set the scope to 1000000000000000000 (10**18). Note that currently only cosmoshub and doravota are supported as ecosystem options.
-> 
+> The 1,000,000 reference value here is the precision of cosmoshub, which is 6 bits, and doravota, which is 18 bits, so when you want to pick doravota's staker as a whitelist and ask them to pledge 1DORA to convert 1vote, you need to set the scope to 1000000000000000000 (10\*\*18). Note that currently only cosmoshub and doravota are supported as ecosystem options.
+>
 > One detail, here the slope is calculated by rounding down.

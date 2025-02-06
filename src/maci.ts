@@ -11,7 +11,14 @@ import {
   CircuitsResponse,
   ProofResponse,
 } from './types';
-import { Http, Indexer, Contract } from './libs';
+import {
+  Http,
+  Indexer,
+  Contract,
+  OracleCertificate,
+  Circom,
+  MACI,
+} from './libs';
 import { getDefaultParams } from './libs/const';
 import {
   CreateAMaciRoundParams,
@@ -19,7 +26,6 @@ import {
   CreateOracleMaciRoundParams,
 } from './libs/contract/types';
 import { OfflineSigner } from '@cosmjs/proto-signing';
-import { Circom } from './libs/circom';
 
 /**
  * @class MaciClient
@@ -29,17 +35,20 @@ export class MaciClient {
   public rpcEndpoint: string;
   public restEndpoint: string;
   public apiEndpoint: string;
+  public certificateApiEndpoint: string;
+
   public registryAddress: string;
   public maciCodeId: number;
   public oracleCodeId: number;
+  public feegrantOperator: string;
+  public whitelistBackendPubkey: string;
 
   public http: Http;
   public indexer: Indexer;
   public contract: Contract;
   public circom: Circom;
-
-  public feegrantOperator: string;
-  public whitelistBackendPubkey: string;
+  public oracleCertificate: OracleCertificate;
+  public maci: MACI;
 
   /**
    * @constructor
@@ -57,12 +66,15 @@ export class MaciClient {
     defaultOptions,
     feegrantOperator,
     whitelistBackendPubkey,
+    certificateApiEndpoint,
   }: ClientParams) {
     const defaultParams = getDefaultParams(network);
 
     this.rpcEndpoint = rpcEndpoint || defaultParams.rpcEndpoint;
     this.restEndpoint = restEndpoint || defaultParams.restEndpoint;
     this.apiEndpoint = apiEndpoint || defaultParams.apiEndpoint;
+    this.certificateApiEndpoint =
+      certificateApiEndpoint || defaultParams.certificateApiEndpoint;
     this.registryAddress = registryAddress || defaultParams.registryAddress;
     this.maciCodeId = maciCodeId || defaultParams.maciCodeId;
     this.oracleCodeId = oracleCodeId || defaultParams.oracleCodeId;
@@ -92,6 +104,16 @@ export class MaciClient {
       whitelistBackendPubkey: this.whitelistBackendPubkey,
     });
     this.circom = new Circom({ network });
+    this.oracleCertificate = new OracleCertificate({
+      certificateApiEndpoint: this.certificateApiEndpoint,
+      http: this.http,
+    });
+    this.maci = new MACI({
+      circom: this.circom,
+      contract: this.contract,
+      indexer: this.indexer,
+      oracleCertificate: this.oracleCertificate,
+    });
   }
 
   async oracleMaciClient({

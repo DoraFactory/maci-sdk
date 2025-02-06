@@ -166,7 +166,8 @@ export function getDefaultParams(
         rpcEndpoint: 'https://vota-rpc.dorafactory.org',
         restEndpoint: 'https://vota-rest.dorafactory.org',
         apiEndpoint: 'https://vota-api.dorafactory.org',
-        certificateApiEndpoint: 'https://vota-certificate-api.dorafactory.org',
+        certificateApiEndpoint:
+          'https://vota-certificate-api.dorafactory.org/api/v1',
         registryAddress:
           'dora1smg5qp5trjdkcekdjssqpjehdjf6n4cjss0clyvqcud3t3u3948s8rmgg4',
         maciCodeId: 106,
@@ -183,7 +184,7 @@ export function getDefaultParams(
         restEndpoint: 'https://vota-testnet-rest.dorafactory.org',
         apiEndpoint: 'https://vota-testnet-api.dorafactory.org',
         certificateApiEndpoint:
-          'https://vota-testnet-certificate-api.dorafactory.org',
+          'https://vota-testnet-certificate-api.dorafactory.org/api/v1',
         registryAddress:
           'dora13c8aecstyxrhax9znvvh5zey89edrmd2k5va57pxvpe3fxtfsfeqlhsjnd',
         maciCodeId: 107,

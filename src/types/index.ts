@@ -17,11 +17,14 @@ export enum MaciRoundType {
   ORACLE_MACI = '2',
 }
 
+export type CertificateEcosystem = 'cosmoshub' | 'doravota';
+
 export type ClientParams = {
   network: 'mainnet' | 'testnet';
   rpcEndpoint?: string;
   restEndpoint?: string;
   apiEndpoint?: string;
+  certificateApiEndpoint?: string;
   registryAddress?: string;
   maciCodeId?: number;
   oracleCodeId?: number;
@@ -131,6 +134,17 @@ export type CircuitType = {
   repoUrl: string;
   zipUrl: string;
   roundCount?: number;
+};
+
+export type SignUpEventType = {
+  id: string;
+  blockHeight: string;
+  txHash: string;
+  contractAddress: string;
+  timestamp: string;
+  pubKey: string;
+  stateIdx: number;
+  balance: string;
 };
 
 export type CircuitsCountGraphqlResponse = {
@@ -318,5 +332,19 @@ export type ProofResponse =
 export type ProofGraphqlResponse = {
   data: {
     proofData: ProofType;
+  };
+};
+
+export type SignUpEventsResponse =
+  | SuccessResponse<{
+      signUpEvents: SignUpEventType[];
+    }>
+  | ErrorResponse;
+
+export type SignUpEventsGraphqlResponse = {
+  data: {
+    signUpEvents: {
+      nodes: SignUpEventType[];
+    };
   };
 };

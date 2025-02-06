@@ -115,7 +115,6 @@ export class Contract {
         }
       }
     });
-    console.log(`Deploy tx: ${res.transactionHash} - ${contractAddress}`);
     return contractAddress;
   }
 
@@ -178,7 +177,7 @@ export class Contract {
         certification_system: maciCertSystem,
         qtr_lib: QTR_LIB,
       },
-      'MACI',
+      `[MACI] ${title}`,
       'auto'
     );
 
@@ -249,13 +248,10 @@ export class Contract {
         qtr_lib: QTR_LIB,
         feegrant_operator: this.feegrantOperator,
       },
-      '[Oracle MACI]' + title,
+      `[Oracle MACI] ${title}`,
       'auto'
     );
 
-    // console.log(
-    //   `Deploy tx: ${instantiateResponse.transactionHash} - ${instantiateResponse.contractAddress} `
-    // );
     return instantiateResponse;
   }
 
