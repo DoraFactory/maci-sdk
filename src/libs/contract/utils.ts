@@ -113,8 +113,15 @@ export function getContractParams(
     // vote_option_tree_depth: 3
     parameters = CIRCUIT_INFO['9-4-3-625'].parameter;
     if (proofSystem === MaciCertSystemType.GROTH16) {
-      groth16ProcessVkey = CIRCUIT_INFO['9-4-3-625']['groth16'].process_vkey;
-      groth16TallyVkey = CIRCUIT_INFO['9-4-3-625']['groth16'].tally_vkey;
+      if (circuitType === MaciCircuitType.IP1V) {
+        groth16ProcessVkey =
+          CIRCUIT_INFO['9-4-3-625']['groth16'].process_1p1v_vkey;
+        groth16TallyVkey = CIRCUIT_INFO['9-4-3-625']['groth16'].tally_1p1v_vkey;
+      } else if (circuitType === MaciCircuitType.QV) {
+        groth16ProcessVkey =
+          CIRCUIT_INFO['9-4-3-625']['groth16'].process_qv_vkey;
+        groth16TallyVkey = CIRCUIT_INFO['9-4-3-625']['groth16'].tally_qv_vkey;
+      }
     } else if (proofSystem === MaciCertSystemType.PLONK) {
       throw new Error('PLONK is not supported for MACI-9');
     }

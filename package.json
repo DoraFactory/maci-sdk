@@ -1,6 +1,6 @@
 {
   "name": "@dorafactory/maci-sdk",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "SDK for interacting with maci",
   "keywords": [
     "maci",
@@ -50,7 +50,7 @@
     "@cosmjs/launchpad": "^0.27.1",
     "@cosmjs/proto-signing": "^0.32.1",
     "@cosmjs/stargate": "^0.32.1",
-    "@injectivelabs/sdk-ts": "^1.14.33",
+    "ethers": "^6.13.4",
     "assert": "^2.1.0",
     "bech32": "1.1.4",
     "superstruct": "^1.0.3",
