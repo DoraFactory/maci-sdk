@@ -27,7 +27,7 @@ import {
   CreateMaciRoundParams,
   CreateOracleMaciRoundParams,
 } from './types';
-import { getContractParams } from './utils';
+import { getCircuitType, getContractParams } from './utils';
 import { QTR_LIB } from './vars';
 import { MaciRoundType, MaciCertSystemType } from '../../types';
 import { decompressPublicKey } from '../../utils';
@@ -192,8 +192,7 @@ export class Contract {
     title,
     description,
     link,
-    maxVoter,
-    maxOption,
+    voteOptionMap,
     circuitType,
     whitelistEcosystem,
     whitelistSnapshotHeight,
@@ -205,20 +204,12 @@ export class Contract {
     const client = await createContractClientByWallet(this.rpcEndpoint, signer);
     const { x: operatorPubkeyX, y: operatorPubkeyY } =
       decompressPublicKey(operatorPubkey);
-    const {
-      parameters,
-      groth16ProcessVkey,
-      groth16TallyVkey,
-      plonkProcessVkey,
-      plonkTallyVkey,
-      maciVoteType,
-      maciCertSystem,
-    } = getContractParams(
+    const { maciVoteType, maciCertSystem } = getContractParams(
       MaciRoundType.ORACLE_MACI,
       circuitType,
       MaciCertSystemType.GROTH16,
-      maxVoter,
-      maxOption
+      '0',
+      '0'
     );
     const instantiateResponse = await client.instantiate(
       address,
@@ -229,23 +220,17 @@ export class Contract {
           start_time,
           end_time,
         },
-        parameters,
         coordinator: {
           x: operatorPubkeyX,
           y: operatorPubkeyY,
         },
-        groth16_process_vkey: groth16ProcessVkey,
-        groth16_tally_vkey: groth16TallyVkey,
-        plonk_process_vkey: plonkProcessVkey,
-        plonk_tally_vkey: plonkTallyVkey,
-        max_vote_options: maxOption,
+        vote_option_map: voteOptionMap,
         whitelist_backend_pubkey: this.whitelistBackendPubkey,
         whitelist_ecosystem: whitelistEcosystem,
         whitelist_snapshot_height: whitelistSnapshotHeight,
         whitelist_voting_power_args: whitelistVotingPowerArgs,
         circuit_type: maciVoteType,
         certification_system: maciCertSystem,
-        qtr_lib: QTR_LIB,
         feegrant_operator: this.feegrantOperator,
       },
       `[Oracle MACI] ${title}`,

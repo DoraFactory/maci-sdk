@@ -29,6 +29,23 @@ export const stringizing = (
   }
 };
 
+export function getCircuitType(circuitType: MaciCircuitType) {
+  let maciVoteType = null;
+  switch (circuitType) {
+    case MaciCircuitType.IP1V:
+      maciVoteType = '0';
+      break;
+    case MaciCircuitType.QV:
+      maciVoteType = '1';
+      break;
+    default:
+      throw new Error(
+        `Invalid circuit type ${circuitType}, only support 1P1V and QV`
+      );
+  }
+  return maciVoteType;
+}
+
 export function getContractParams(
   type: MaciRoundType,
   circuitType: MaciCircuitType,

@@ -64,19 +64,19 @@ async function main() {
 
   await delay(6000);
 
-  //   // oracle maci sign up
-  //   const signupResponse = await client.maci.signup({
-  //     signer: wallet,
-  //     address,
-  //     contractAddress: RoundAddress,
-  //     oracleCertificate: {
-  //       amount: certificate.amount,
-  //       signature: certificate.signature,
-  //     },
-  //     gasStation: true,
-  //   });
+  // oracle maci sign up
+  const signupResponse = await client.maci.signup({
+    signer: wallet,
+    address,
+    contractAddress: RoundAddress,
+    oracleCertificate: {
+      amount: certificate.amount,
+      signature: certificate.signature,
+    },
+    gasStation: true,
+  });
 
-  //   console.log('signup tx:', signupResponse.transactionHash);
+  console.log('signup tx:', signupResponse.transactionHash);
 
   await delay(6000);
 

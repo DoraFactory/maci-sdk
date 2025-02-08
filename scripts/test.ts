@@ -17,89 +17,6 @@ async function main() {
     network: 'testnet',
   });
 
-  // const ROUND_ADDRESS =
-  //   'dora1de7l4fx9tltcj67xjs80hwq5mgzh050y0k5838hax9dkgvsva6csqk9cl0';
-  // const TRANSACTION_HASH =
-  //   'BD2D0D8141736519DBA92190A2AF56908ADB8D3CFDF3260EDDB1366FA2A073D2';
-  // const OPERATOR_ADDRESS = 'dora1zrd68hgj5uzqpm5x8v6pylwqjsnltp6nyr8s0k';
-  // const CIRCUIT_NAME = 'amaci-qv';
-
-  // try {
-  //   // Test getting account balance
-  //   const balance = await client.balanceOf(OPERATOR_ADDRESS);
-  //   console.log('balanceOf:', balance.code);
-
-  //   // Test getting round information
-  //   const round = await client.getRoundById(ROUND_ADDRESS);
-  //   console.log('getRoundById:', round.code);
-
-  //   // Test getting paginated round list
-  //   const rounds = await client.getRounds('first', 10);
-  //   console.log('getRounds:', rounds.code);
-
-  //   // Test getting rounds by status
-  //   const roundsByStatus = await client.getRoundsByStatus(
-  //     'Created',
-  //     'first',
-  //     10
-  //   );
-  //   console.log('getRoundsByStatus:', roundsByStatus.code);
-
-  //   // Test getting rounds by circuit name
-  //   const roundsByCircuit = await client.getRoundsByCircuitName(
-  //     CIRCUIT_NAME,
-  //     'first',
-  //     10
-  //   );
-  //   console.log('getRoundsByCircuitName:', roundsByCircuit.code);
-
-  //   // Test getting rounds by operator
-  //   const roundsByOperator = await client.getRoundsByOperator(
-  //     OPERATOR_ADDRESS,
-  //     'first',
-  //     10
-  //   );
-  //   console.log('getRoundsByOperator:', roundsByOperator.code);
-
-  //   // Test getting operator information
-  //   const operator = await client.getOperatorByAddress(OPERATOR_ADDRESS);
-  //   console.log('getOperatorByAddress:', operator.code);
-
-  //   // Test getting operator list
-  //   const operators = await client.getOperators('first', 10);
-  //   console.log('getOperators:', operators.code);
-
-  //   // Test getting circuit information
-  //   const circuit = await client.getCircuitByName(CIRCUIT_NAME);
-  //   console.log('getCircuitByName:', circuit.code);
-
-  //   // Test getting all circuits
-  //   const circuits = await client.getCircuits();
-  //   console.log('getCircuits:', circuits.code);
-
-  //   // Test getting transaction information
-  //   const transaction = await client.getTransactionByHash(TRANSACTION_HASH);
-  //   console.log('getTransactionByHash:', transaction.code);
-
-  //   // Test getting transaction list
-  //   const transactions = await client.getTransactions('first', 10);
-  //   console.log('getTransactions:', transactions.code);
-
-  //   // Test getting transactions by contract address
-  //   const txByContract = await client.getTransactionsByContractAddress(
-  //     ROUND_ADDRESS,
-  //     'first',
-  //     10
-  //   );
-  //   console.log('getTransactionsByContractAddress:', txByContract.code);
-
-  //   // Test getting proof information
-  //   const proof = await client.getProofByContractAddress(ROUND_ADDRESS);
-  //   console.log('getProofByContractAddress:', proof.code);
-  // } catch (error) {
-  //   console.error('Error occurred during testing:', error);
-  // }
-
   console.log('======= start test contract logic =======');
   let key = process.env.ADMIN_PRIVATE_KEY;
   if (!key) {
@@ -122,8 +39,7 @@ async function main() {
     title: 'test',
     description: 'test',
     link: 'test',
-    maxVoter: '5',
-    maxOption: '5',
+    voteOptionMap: ['option1: A', 'option2: B', 'option3: C'],
     circuitType: MaciCircuitType.IP1V,
     whitelistEcosystem: 'cosmoshub',
     whitelistSnapshotHeight: '0',
@@ -134,16 +50,6 @@ async function main() {
     },
   });
   console.log('newRound:', newRound);
-  await delay(12000); // wait for round to be created
-  const oracleClient = await client.oracleMaciClient({
-    signer: wallet,
-    contractAddress: newRound.contractAddress,
-  });
-
-  const response = await oracleClient.setVoteOptionsMap({
-    voteOptionMap: ['option1', 'option2', 'option3'],
-  });
-  console.log('response:', response);
 
   // const roundInfo = await client.contract.queryRoundInfo({
   //   signer: wallet,

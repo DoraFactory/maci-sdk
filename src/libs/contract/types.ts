@@ -14,12 +14,12 @@ export type CreateRoundParams = {
   link?: string;
   startVoting: Date;
   endVoting: Date;
-  maxVoter: string;
-  maxOption: string;
   circuitType: MaciCircuitType;
 };
 
 export type CreateAMaciRoundParams = {
+  maxVoter: string;
+  maxOption: string;
   operator: string;
   whitelist: RegistryWhitelist;
   voiceCreditAmount: string;
@@ -27,12 +27,15 @@ export type CreateAMaciRoundParams = {
 } & CreateRoundParams;
 
 export type CreateMaciRoundParams = {
+  maxVoter: string;
+  maxOption: string;
   operatorPubkey: string;
   whitelist: MaciWhitelist;
   certSystemType: MaciCertSystemType;
 } & CreateRoundParams;
 
 export type CreateOracleMaciRoundParams = {
+  voteOptionMap: string[];
   operatorPubkey: string;
   whitelistEcosystem: CertificateEcosystem;
   whitelistSnapshotHeight: string;
