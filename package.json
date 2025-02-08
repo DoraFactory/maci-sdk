@@ -1,6 +1,6 @@
 {
   "name": "@dorafactory/maci-sdk",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "SDK for interacting with maci",
   "keywords": [
     "maci",

@@ -56,6 +56,18 @@ async function main() {
   //   contractAddress: newRound.contractAddress,
   // });
   // console.log('roundInfo:', roundInfo);
+  const oracleMaciClient = await client.oracleMaciClient({
+    signer: wallet,
+    contractAddress:
+      'dora1s7ldv49q43pv6nwsp2gx97jy7xadgu9dgpc8yqsqj035h4awtycq57xjzm',
+  });
+
+  await oracleMaciClient.bond(undefined, undefined, [
+    {
+      denom: 'peaka',
+      amount: '20000000000000000000',
+    },
+  ]);
 }
 
 main();
