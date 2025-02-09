@@ -27,8 +27,8 @@ importers:
         specifier: ^0.32.1
         version: 0.32.4
       '@dorafactory/circomlib':
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.0.3
+        version: 0.0.3
       assert:
         specifier: ^2.1.0
         version: 2.1.0
@@ -303,8 +303,8 @@ packages:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
 
-  '@dorafactory/circomlib@0.0.2':
-    resolution: {integrity: sha512-Cfj0YqjMkY5W+HUQZ4r/kIUYi3UkrV8AtpDdvyKqBXX9UccF3bxsQ1clC4Kd/YBEUP7I+dn6q9An60pOaYW+Bw==}
+  '@dorafactory/circomlib@0.0.3':
+    resolution: {integrity: sha512-ACQef7T0fj+tHT0tKV8iUOS1z4hCAqFYaPddM7Mvr3JQ3DbZpF4dZilyDkysKqRPdqwAwgPjWDyrgxXcDMeSsw==}
     engines: {node: '>=12.0.0'}
 
   '@esbuild/aix-ppc64@0.19.12':
@@ -3261,7 +3261,7 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  '@dorafactory/circomlib@0.0.2':
+  '@dorafactory/circomlib@0.0.3':
     dependencies:
       blake-hash: 1.1.1
       blake2b: 2.1.4
