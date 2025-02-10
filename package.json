@@ -1,6 +1,6 @@
 {
   "name": "@dorafactory/maci-sdk",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "SDK for interacting with maci",
   "keywords": [
     "maci",
@@ -20,9 +20,18 @@
   "engines": {
     "node": ">=18"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./browser": {
+      "types": "./dist/browser.d.ts",
+      "import": "./dist/browser.mjs"
+    }
+  },
   "files": [
     "dist",
     "src"
@@ -30,8 +39,8 @@
   "scripts": {
     "clean": "rm -rf tsconfig.tsbuildinfo ./dist",
     "build": "npm run build:types && npm run build:tsup",
-    "build:tsup": "tsup ./src/index.ts --format esm,cjs --sourcemap",
-    "build:types": "tsc --build",
+    "build:tsup": "tsup",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist",
     "watch:tsup": "tsup ./src/index.ts --format esm,cjs --clean --splitting --watch",
     "watch:types": "tsc --watch",
     "watch": "pnpm run clean & pnpm run watch:types & pnpm run watch:tsup",
@@ -50,19 +59,19 @@
     "@cosmjs/launchpad": "^0.27.1",
     "@cosmjs/proto-signing": "^0.32.1",
     "@cosmjs/stargate": "^0.32.1",
+    "@dorafactory/circomlib": "^0.0.3",
     "assert": "^2.1.0",
     "bech32": "1.1.4",
-    "@dorafactory/circomlib": "^0.0.3",
+    "blake-hash": "^2.0.0",
     "colorts": "^0.1.63",
     "cosmjs-types": "^0.9.0",
-    "blake-hash": "^2.0.0",
-    "ffjavascript": "^0.2.60",
     "ethers": "^6.13.4",
+    "ffjavascript": "^0.2.60",
     "gql.tada": "^1.7.0",
     "graphql": "^16.8.1",
     "husky": "^8.0.3",
     "keccak256": "^1.0.6",
-    "process": "^0.11.10",
+    "micro-ftch": "^0.4.2",
     "superstruct": "^1.0.3",
     "tmp": "^0.2.1",
     "ts-retry-promise": "^0.7.1",
@@ -77,17 +86,27 @@
     "@types/tmp": "^0.2.5",
     "@typescript-eslint/eslint-plugin": "^6.8.0",
     "@typescript-eslint/parser": "^6.8.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.1",
     "dotenv": "^16.3.1",
+    "esbuild": "^0.25.0",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "events": "^3.3.0",
+    "events-browserify": "^0.0.1",
+    "https-browserify": "^1.0.0",
     "lint-staged": "^15.0.2",
     "prettier": "^2.8.8",
+    "process": "^0.11.10",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
-    "tsup": "^7.1.0",
+    "tsup": "^8.0.0",
     "typedoc": "^0.25.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "browserify-zlib": "^0.2.0"
   },
   "lint-staged": {
     "**/*.ts": [

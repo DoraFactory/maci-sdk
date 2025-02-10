@@ -32,7 +32,7 @@ async function main() {
   // ================ test oracle signup and vote
 
   const RoundAddress =
-    'dora1mefhszqydgxuj9t3qea3365sg35a9xnsufa9el2ul2rhjh3xy9es2smxnj';
+    'dora12x24cs2l4nswqgkh9zz0l6ej78yk5edtc3hdx3vvamn4n9yd2xws0cmlje';
 
   const roundInfo = await client.maci.getRoundInfo({
     contractAddress: RoundAddress,
@@ -73,7 +73,7 @@ async function main() {
       amount: certificate.amount,
       signature: certificate.signature,
     },
-    gasStation: true,
+    gasStation: false,
   });
 
   console.log('signup tx:', signupResponse.transactionHash);
@@ -94,15 +94,14 @@ async function main() {
     stateIdx,
     contractAddress: RoundAddress,
     selectedOptions: [
-      { idx: 0, vc: 2 },
+      { idx: 0, vc: 1 },
       { idx: 1, vc: 1 },
-      { idx: 4, vc: 1 },
     ],
     operatorCoordPubKey: [
       BigInt(roundInfo.coordinatorPubkeyX),
       BigInt(roundInfo.coordinatorPubkeyY),
     ],
-    gasStation: true,
+    gasStation: false,
   });
 
   console.log('vote tx:', voteResponse.transactionHash);

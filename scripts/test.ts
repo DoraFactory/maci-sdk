@@ -14,7 +14,7 @@ function delay(ms: number) {
 
 async function main() {
   const client = new MaciClient({
-    network: 'testnet',
+    network: 'mainnet',
   });
 
   console.log('======= start test contract logic =======');
@@ -33,15 +33,15 @@ async function main() {
   const newRound = await client.createOracleMaciRound({
     signer: wallet,
     operatorPubkey:
-      '0e752cc9fe60255a607191dc8b56455eb459a34068fcec6701a80787cac532d02d61d1f14d35e3553e4abacdee2d47b417716d02c4c0379fc161c8c4f8863177',
-    startVoting: new Date(new Date().getTime() + 3 * 60 * 1000),
+      '0d622736d5630a9e39a2998599bebf703a794978b64d30148cf7a15870f014fe2d79c78ccd5fffa53897b817075bdeef74a2ea9f244983d2f0829e19f44c59b5',
+    startVoting: new Date(new Date().getTime()),
     endVoting: new Date(new Date().getTime() + 15 * 60 * 1000),
-    title: 'test',
+    title: 'new oracle maci round',
     description: 'test',
     link: 'test',
     voteOptionMap: ['option1: A', 'option2: B', 'option3: C'],
     circuitType: MaciCircuitType.IP1V,
-    whitelistEcosystem: 'cosmoshub',
+    whitelistEcosystem: 'doravota',
     whitelistSnapshotHeight: '0',
     whitelistVotingPowerArgs: {
       mode: 'slope',
@@ -56,18 +56,18 @@ async function main() {
   //   contractAddress: newRound.contractAddress,
   // });
   // console.log('roundInfo:', roundInfo);
-  const oracleMaciClient = await client.oracleMaciClient({
-    signer: wallet,
-    contractAddress:
-      'dora1s7ldv49q43pv6nwsp2gx97jy7xadgu9dgpc8yqsqj035h4awtycq57xjzm',
-  });
+  // const oracleMaciClient = await client.oracleMaciClient({
+  //   signer: wallet,
+  //   contractAddress:
+  //     'dora1s7ldv49q43pv6nwsp2gx97jy7xadgu9dgpc8yqsqj035h4awtycq57xjzm',
+  // });
 
-  await oracleMaciClient.bond(undefined, undefined, [
-    {
-      denom: 'peaka',
-      amount: '20000000000000000000',
-    },
-  ]);
+  // await oracleMaciClient.bond(undefined, undefined, [
+  //   {
+  //     denom: 'peaka',
+  //     amount: '20000000000000000000',
+  //   },
+  // ]);
 }
 
 main();

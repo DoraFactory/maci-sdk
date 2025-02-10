@@ -8,7 +8,7 @@ import {
   SigningCosmWasmClient,
 } from '@cosmjs/cosmwasm-stargate';
 import { GasPrice, calculateFee, StdFee } from '@cosmjs/stargate';
-import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
+import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx.js';
 import { CertificateEcosystem, ErrorResponse } from '../../types';
 import { SignatureResponse } from '../oracle-certificate/types';
 import { OracleWhitelistConfig } from '../contract/ts/OracleMaci.types';
