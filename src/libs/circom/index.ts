@@ -24,6 +24,19 @@ export class Circom {
     address: string,
     message: string
   ): Promise<SignResult> {
+    if (typeof window !== 'undefined' && (window as any).keplr) {
+      const sig = await (window as any).keplr.signArbitrary(
+        this.chainId,
+        address,
+        message
+      );
+
+      return {
+        signature: sig.signature,
+        pubkey: sig.pub_key.value,
+      };
+    }
+
     const accounts = await signer.getAccounts();
     const account = accounts.find((acc) => acc.address === address);
 
