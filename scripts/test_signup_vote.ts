@@ -1,6 +1,7 @@
 import { MaciClient } from '../src';
 import { DirectSecp256k1Wallet } from '@cosmjs/proto-signing';
 import dotenv from 'dotenv';
+import { isErrorResponse } from '../src/libs/maci/maci';
 
 dotenv.config();
 
@@ -32,11 +33,33 @@ async function main() {
   // ================ test oracle signup and vote
 
   const RoundAddress =
-    'dora12x24cs2l4nswqgkh9zz0l6ej78yk5edtc3hdx3vvamn4n9yd2xws0cmlje';
+    'dora14jqx78mxrhmzaldsh2hnjey4ljlf49nhuzry6wf05rsrqlld58vqnf4k9f';
 
-  // generate maci account
-  const maciAccount = await client.circom.genKeypairFromSign(wallet, address);
-  console.log('maciAccount First', maciAccount);
+  const roundInfo = await client.maci.getRoundInfo({
+    contractAddress: RoundAddress,
+  });
+  console.log('roundInfo', roundInfo);
+
+  const status = client.maci.parseRoundStatus(
+    Number(roundInfo.votingStart),
+    Number(roundInfo.votingEnd),
+    roundInfo.status,
+    new Date()
+  );
+  console.log('status', status);
+
+  const roundBalance = await client.maci.queryRoundBalance({
+    contractAddress: RoundAddress,
+  });
+  console.log(`roundBalance: ${Number(roundBalance) / 10 ** 18} DORA`);
+
+  const totalBond = roundInfo.totalBond;
+  console.log(`totalBond: ${Number(totalBond) / 10 ** 18} DORA`);
+
+  // // generate maci account
+  // // generate maci account
+  // const maciAccount = await client.circom.genKeypairFromSign(wallet, address);
+  // console.log('maciAccount First', maciAccount);
 
   // // get certificate
   // const certificate = await client.maci.requestOracleCertificate({

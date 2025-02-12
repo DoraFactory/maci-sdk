@@ -129,7 +129,7 @@ export class MACI {
           return round.data.round.voiceCreditAmount;
         } else {
           throw new Error(
-            `Failed to query amaci voice credit: ${round.error.type}`
+            `Failed to query amaci voice credit: ${round.error.type} ${round.error.message}`
           );
         }
       } else {
@@ -205,7 +205,9 @@ export class MACI {
     const roundInfo = await this.indexer.getRoundById(contractAddress);
 
     if (isErrorResponse(roundInfo)) {
-      throw new Error(`Failed to get round info: ${roundInfo.error.type}`);
+      throw new Error(
+        `Failed to get round info: ${roundInfo.error.type} ${roundInfo.error.message}`
+      );
     }
 
     return roundInfo.data.round;
@@ -259,6 +261,17 @@ export class MACI {
     }
 
     return status;
+  }
+
+  async queryRoundBalance({ contractAddress }: { contractAddress: string }) {
+    const roundBalance = await this.indexer.balanceOf(contractAddress);
+    if (isErrorResponse(roundBalance)) {
+      throw new Error(
+        `Failed to query round balance: ${roundBalance.error.type} ${roundBalance.error.message}`
+      );
+    }
+
+    return roundBalance.data.balance;
   }
 
   async requestOracleCertificate({
