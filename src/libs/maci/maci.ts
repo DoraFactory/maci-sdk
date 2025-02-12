@@ -229,6 +229,38 @@ export class MACI {
     return roundInfo.gasStationEnable;
   }
 
+  parseRoundStatus(
+    votingStart: number,
+    votingEnd: number,
+    status: string,
+    currentTime: Date
+  ): string {
+    const startTime = new Date(votingStart / 10 ** 6);
+    const endTime = new Date(votingEnd / 10 ** 6);
+
+    // Inherit logic from Maci Explorer
+    if (Number(votingStart) === 0) {
+      return 'Created';
+    }
+
+    if (Number(votingEnd) === 0) {
+      if (startTime < currentTime) {
+        return 'Ongoing';
+      }
+    } else {
+      if (startTime < currentTime && currentTime < endTime) {
+        return 'Ongoing';
+      }
+      if (currentTime > endTime) {
+        if (status !== 'Closed') {
+          return 'Tallying';
+        }
+      }
+    }
+
+    return status;
+  }
+
   async requestOracleCertificate({
     signer,
     ecosystem,
