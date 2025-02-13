@@ -1,5 +1,11 @@
 import { OfflineSigner } from '@cosmjs/proto-signing';
-import { batchGenMessage, Circom, PublicKey, stringizing } from '../circom';
+import {
+  Account,
+  batchGenMessage,
+  Circom,
+  PublicKey,
+  stringizing,
+} from '../circom';
 import { Contract } from '../contract';
 import { Indexer } from '../indexer';
 import { OracleCertificate } from '../oracle-certificate';
@@ -304,12 +310,14 @@ export class MACI {
     signer,
     address,
     contractAddress,
+    maciAccount,
     oracleCertificate,
     gasStation = false,
   }: {
     signer: OfflineSigner;
     address: string;
     contractAddress: string;
+    maciAccount?: Account;
     oracleCertificate?: {
       amount: string;
       signature: string;
@@ -317,7 +325,9 @@ export class MACI {
     gasStation?: boolean;
   }) {
     try {
-      const maciAccount = await this.circom.genKeypairFromSign(signer, address);
+      if (maciAccount === undefined) {
+        maciAccount = await this.circom.genKeypairFromSign(signer, address);
+      }
 
       const client = await this.contract.contractClient({
         signer,
@@ -392,6 +402,7 @@ export class MACI {
     contractAddress,
     selectedOptions,
     operatorCoordPubKey,
+    maciAccount,
     gasStation = false,
   }: {
     signer: OfflineSigner;
@@ -403,6 +414,7 @@ export class MACI {
       vc: number;
     }[];
     operatorCoordPubKey: PublicKey;
+    maciAccount?: Account;
     gasStation?: boolean;
   }) {
     if (stateIdx === -1) {
@@ -422,7 +434,9 @@ export class MACI {
         voiceCreditBalance,
       });
 
-      const maciAccount = await this.circom.genKeypairFromSign(signer, address);
+      if (maciAccount === undefined) {
+        maciAccount = await this.circom.genKeypairFromSign(signer, address);
+      }
 
       const plan = options.map((o) => {
         return [o.idx, o.vc] as [number, number];

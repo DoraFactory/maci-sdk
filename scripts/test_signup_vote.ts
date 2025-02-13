@@ -56,74 +56,76 @@ async function main() {
   const totalBond = roundInfo.totalBond;
   console.log(`totalBond: ${Number(totalBond) / 10 ** 18} DORA`);
 
-  // // generate maci account
-  // // generate maci account
-  // const maciAccount = await client.circom.genKeypairFromSign(wallet, address);
-  // console.log('maciAccount First', maciAccount);
+  // generate maci account
+  // generate maci account
+  const maciAccount = await client.circom.genKeypairFromSign(wallet, address);
+  console.log('maciAccount First', maciAccount);
 
-  // // get certificate
-  // const certificate = await client.maci.requestOracleCertificate({
-  //   signer: wallet,
-  //   ecosystem: 'doravota',
-  //   address,
-  //   contractAddress: RoundAddress,
-  // });
-  // console.log('certificate', certificate);
+  // get certificate
+  const certificate = await client.maci.requestOracleCertificate({
+    signer: wallet,
+    ecosystem: 'doravota',
+    address,
+    contractAddress: RoundAddress,
+  });
+  console.log('certificate', certificate);
 
-  // let gasStationEnable = roundInfo.gasStationEnable;
-  // console.log('gasStationEnable', gasStationEnable);
+  let gasStationEnable = roundInfo.gasStationEnable;
+  console.log('gasStationEnable', gasStationEnable);
 
-  // while (!gasStationEnable) {
-  //   await delay(1000);
-  //   gasStationEnable = await client.maci.queryRoundGasStation({
-  //     contractAddress: RoundAddress,
-  //   });
-  //   console.log('checking gasStationEnable:', gasStationEnable);
-  // }
+  while (!gasStationEnable) {
+    await delay(1000);
+    gasStationEnable = await client.maci.queryRoundGasStation({
+      contractAddress: RoundAddress,
+    });
+    console.log('checking gasStationEnable:', gasStationEnable);
+  }
 
-  // await delay(6000);
+  await delay(6000);
 
-  // // oracle maci sign up
-  // const signupResponse = await client.maci.signup({
-  //   signer: wallet,
-  //   address,
-  //   contractAddress: RoundAddress,
-  //   oracleCertificate: {
-  //     amount: certificate.amount,
-  //     signature: certificate.signature,
-  //   },
-  //   gasStation: false,
-  // });
+  // oracle maci sign up
+  const signupResponse = await client.maci.signup({
+    signer: wallet,
+    address,
+    contractAddress: RoundAddress,
+    maciAccount,
+    oracleCertificate: {
+      amount: certificate.amount,
+      signature: certificate.signature,
+    },
+    gasStation: false,
+  });
 
-  // console.log('signup tx:', signupResponse.transactionHash);
+  console.log('signup tx:', signupResponse.transactionHash);
 
-  // await delay(6000);
+  await delay(6000);
 
-  // // get user state idx
-  // const stateIdx = await client.maci.getStateIdxByPubKey({
-  //   contractAddress: RoundAddress,
-  //   pubKey: maciAccount.pubKey,
-  // });
-  // console.log('stateIdx', stateIdx);
+  // get user state idx
+  const stateIdx = await client.maci.getStateIdxByPubKey({
+    contractAddress: RoundAddress,
+    pubKey: maciAccount.pubKey,
+  });
+  console.log('stateIdx', stateIdx);
 
-  // // vote
-  // const voteResponse = await client.maci.vote({
-  //   signer: wallet,
-  //   address,
-  //   stateIdx,
-  //   contractAddress: RoundAddress,
-  //   selectedOptions: [
-  //     { idx: 0, vc: 1 },
-  //     { idx: 1, vc: 1 },
-  //   ],
-  //   operatorCoordPubKey: [
-  //     BigInt(roundInfo.coordinatorPubkeyX),
-  //     BigInt(roundInfo.coordinatorPubkeyY),
-  //   ],
-  //   gasStation: false,
-  // });
+  // vote
+  const voteResponse = await client.maci.vote({
+    signer: wallet,
+    address,
+    stateIdx,
+    contractAddress: RoundAddress,
+    selectedOptions: [
+      { idx: 0, vc: 1 },
+      { idx: 1, vc: 1 },
+    ],
+    operatorCoordPubKey: [
+      BigInt(roundInfo.coordinatorPubkeyX),
+      BigInt(roundInfo.coordinatorPubkeyY),
+    ],
+    maciAccount,
+    gasStation: false,
+  });
 
-  // console.log('vote tx:', voteResponse.transactionHash);
+  console.log('vote tx:', voteResponse.transactionHash);
 }
 
 main();

@@ -178,6 +178,7 @@ const signupResponse = await client.maci.signup({
   signer: wallet,
   address,
   contractAddress: 'dora1...',
+  maciAccount,
   oracleCertificate: {
     amount: certificate.amount,
     signature: certificate.signature,
@@ -206,6 +207,7 @@ const voteResponse = await client.maci.vote({
     BigInt(roundInfo.coordinatorPubkeyX),
     BigInt(roundInfo.coordinatorPubkeyY),
   ],
+  maciAccount,
   gasStation: true,
 });
 ```
