@@ -188,7 +188,8 @@ export function getDefaultParams(
         registryAddress:
           'dora13c8aecstyxrhax9znvvh5zey89edrmd2k5va57pxvpe3fxtfsfeqlhsjnd',
         maciCodeId: 107,
-        oracleCodeId: 113,
+        // oracleCodeId: 113, // 9-4-3-625
+        oracleCodeId: 115, // 6-3-3-125
         oracleWhitelistBackendPubkey:
           'AoYo/zENN/JquagPdG0/NMbWBBYxOM8BVN677mBXJKJQ',
         oracleFeegrantOperator: 'dora1xp0twdzsdeq4qg3c64v66552deax8zmvq4zw78',

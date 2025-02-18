@@ -14,7 +14,7 @@ function delay(ms: number) {
 
 async function main() {
   const client = new MaciClient({
-    network: 'mainnet',
+    network: 'testnet',
   });
 
   console.log('======= start test contract logic =======');

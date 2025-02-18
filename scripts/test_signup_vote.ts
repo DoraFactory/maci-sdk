@@ -47,6 +47,12 @@ async function main() {
     new Date()
   );
   console.log('status', status);
+  const oracleClient = await client.contract.oracleMaciClient({
+    signer: wallet,
+    contractAddress: RoundAddress,
+  });
+  const oracleConfig = await oracleClient.queryOracleWhitelistConfig();
+  console.log('oracleConfig', oracleConfig);
 
   const roundBalance = await client.maci.queryRoundBalance({
     contractAddress: RoundAddress,
