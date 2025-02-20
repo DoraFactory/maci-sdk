@@ -116,11 +116,12 @@ export class Http {
     }
   }
 
-  async fetchRest(path: string): Promise<any> {
+  async fetchRest(path: string, options?: any): Promise<any> {
     try {
       const fetchFn = this.getFetch();
       const response = await fetchFn(`${this.restEndpoint}${path}`, {
         ...this.defaultOptions,
+        ...options,
       });
 
       if (!response.ok) {

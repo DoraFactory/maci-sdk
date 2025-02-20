@@ -18,3 +18,12 @@ export type SignatureResponse = {
   amount: string;
   snapshotHeight: string;
 };
+
+export type FeegrantAllowanceResponse = {
+  granter: string;
+  grantee: string;
+  spend_limit: {
+    denom: string;
+    amount: string;
+  }[];
+};

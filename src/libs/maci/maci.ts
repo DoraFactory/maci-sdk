@@ -107,6 +107,28 @@ export class MACI {
     return response.data.signUpEvents[0].stateIdx;
   }
 
+  async feegrantAllowance({
+    address,
+    contractAddress,
+  }: {
+    address: string;
+    contractAddress: string;
+  }) {
+    try {
+      const response = await this.oracleCertificate.feegrantAllowance(
+        contractAddress,
+        address
+      );
+      return response;
+    } catch (error) {
+      return {
+        granter: contractAddress,
+        grantee: address,
+        spend_limit: [],
+      };
+    }
+  }
+
   // only for maci and oracle maci, amaci will set the voice credit when deploy the contract
   async queryWhitelistBalanceOf({
     signer,

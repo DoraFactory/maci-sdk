@@ -3,6 +3,7 @@ import {
   OracleCertificateParams,
   SignatureRequest,
   SignatureResponse,
+  FeegrantAllowanceResponse,
 } from './types';
 
 export class OracleCertificate {
@@ -32,5 +33,20 @@ export class OracleCertificate {
     const signatureData = await response.json();
 
     return signatureData;
+  }
+
+  async feegrantAllowance(
+    granter: string,
+    grantee: string
+  ): Promise<FeegrantAllowanceResponse> {
+    const response = await this.http.fetchRest(
+      `/cosmos/feegrant/v1beta1/allowance/${granter}/${grantee}`
+    );
+
+    return {
+      granter,
+      grantee,
+      spend_limit: response.allowance.allowance.allowance.spend_limit,
+    };
   }
 }
