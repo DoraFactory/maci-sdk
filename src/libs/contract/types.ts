@@ -18,8 +18,8 @@ export type CreateRoundParams = {
 };
 
 export type CreateAMaciRoundParams = {
-  maxVoter: string;
-  maxOption: string;
+  maxVoter: number;
+  maxOption: number;
   operator: string;
   whitelist: RegistryWhitelist;
   voiceCreditAmount: string;
@@ -27,8 +27,8 @@ export type CreateAMaciRoundParams = {
 } & CreateRoundParams;
 
 export type CreateMaciRoundParams = {
-  maxVoter: string;
-  maxOption: string;
+  maxVoter: number;
+  maxOption: number;
   operatorPubkey: string;
   whitelist: MaciWhitelist;
   certSystemType: MaciCertSystemType;

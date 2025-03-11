@@ -114,6 +114,19 @@ export type ProofType = {
   }[];
 };
 
+export type OperatorDelayType = {
+  blockHeight: string;
+  delayProcessDmsgCount: number;
+  delayDuration: string;
+  delayReason: string;
+  delayType: string;
+  id: string;
+  nodeId: string;
+  operatorAddress: string;
+  timestamp: string;
+  roundAddress: string;
+};
+
 export type OperatorType = {
   id: string;
   validatorAddress: string;
@@ -192,6 +205,36 @@ export type OperatorResponse =
     }>
   | ErrorResponse;
 
+export type MissRateResponse =
+  | SuccessResponse<{
+      missRate: (MissRateType & {
+        date: string;
+      })[];
+    }>
+  | ErrorResponse;
+
+// export type ClaimableResponse =
+//   | SuccessResponse<{
+//       claimable: ClaimableType;
+//     }>
+//   | ErrorResponse;
+
+export type OperatorDelayOperationsResponse =
+  | SuccessResponse<{
+      operatorDelayOperations: {
+        pageInfo: {
+          endCursor: string;
+          hasNextPage: boolean;
+        };
+        edges: {
+          cursor: string;
+          node: OperatorDelayType;
+        }[];
+        totalCount: number;
+      };
+    }>
+  | ErrorResponse;
+
 export type OperatorsResponse =
   | SuccessResponse<{
       operators: {
@@ -230,6 +273,33 @@ export type RoundsCountGraphqlResponse = {
       totalCount: number;
     };
     completedRoundsCount: {
+      totalCount: number;
+    };
+  };
+};
+
+export type VoteCountGraphqlResponse = {
+  data: {
+    signupsCount: {
+      totalCount: number;
+    };
+    messagesCount: {
+      totalCount: number;
+    };
+  };
+};
+
+export type OperatorDelayOperationsGraphqlResponse = {
+  data: {
+    operatorDelayOperations: {
+      pageInfo: {
+        endCursor: string;
+        hasNextPage: boolean;
+      };
+      edges: {
+        cursor: string;
+        node: OperatorDelayType;
+      }[];
       totalCount: number;
     };
   };
@@ -347,4 +417,20 @@ export type SignUpEventsGraphqlResponse = {
       nodes: SignUpEventType[];
     };
   };
+};
+
+export type MissRateType = {
+  delayCount: number;
+  deactivateDelay: {
+    count: number;
+    dmsgCount: number;
+  };
+  tallyDelay: {
+    count: number;
+  };
+  totalDelayDuration: number;
+  avgDelayDuration: number;
+  tallyCount: number;
+  deactivateCount: number;
+  missRate: number;
 };

@@ -253,6 +253,66 @@ export class MACI {
     return circuitType === '1';
   }
 
+  async queryRoundClaimable({
+    contractAddress,
+  }: {
+    contractAddress: string;
+  }): Promise<{
+    claimable: boolean | null;
+    balance: string | null;
+  }> {
+    try {
+      const roundInfo = await this.getRoundInfo({ contractAddress });
+
+      if (roundInfo.maciType !== 'aMACI') {
+        return {
+          claimable: null,
+          balance: null,
+        };
+      }
+
+      const votingEndTime = new Date(Number(roundInfo.votingEnd) / 10 ** 6);
+      const currentTime = new Date();
+      const threeDaysInMs = 3 * 24 * 60 * 60 * 1000;
+
+      if (currentTime.getTime() - votingEndTime.getTime() <= threeDaysInMs) {
+        return {
+          claimable: null,
+          balance: null,
+        };
+      }
+
+      const roundBalance = await this.indexer.balanceOf(contractAddress);
+      if (isErrorResponse(roundBalance)) {
+        throw new Error(
+          `Failed to query round balance: ${roundBalance.error.type} ${roundBalance.error.message}`
+        );
+      }
+
+      if (
+        roundBalance.data.balance &&
+        roundBalance.data.balance !== '0' &&
+        roundBalance.data.balance !== ''
+      ) {
+        return {
+          claimable: true,
+          balance: roundBalance.data.balance,
+        };
+      }
+
+      return {
+        claimable: false,
+        balance: roundBalance.data.balance,
+      };
+    } catch (error) {
+      console.error('Error in queryRoundClaimable:', error);
+      return {
+        claimable: null,
+        balance: null,
+      };
+    }
+  }
+
   async queryRoundGasStation({ contractAddress }: { contractAddress: string }) {
     const roundInfo = await this.getRoundInfo({ contractAddress });
 

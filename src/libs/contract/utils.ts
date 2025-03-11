@@ -50,8 +50,8 @@ export function getContractParams(
   type: MaciRoundType,
   circuitType: MaciCircuitType,
   proofSystem: MaciCertSystemType,
-  maxVoter: string,
-  maxOption: string
+  maxVoter: number,
+  maxOption: number
 ) {
   let parameters: {
     state_tree_depth: string;
@@ -92,7 +92,7 @@ export function getContractParams(
       );
   }
 
-  if (Number(maxVoter) <= 25 && Number(maxOption) <= 5) {
+  if (maxVoter <= 25 && maxOption <= 5) {
     // state_tree_depth: 2
     // vote_option_tree_depth: 1
     parameters = CIRCUIT_INFO['2-1-1-5'].parameter;
@@ -103,7 +103,7 @@ export function getContractParams(
       plonkProcessVkey = CIRCUIT_INFO['2-1-1-5']['plonk']?.process_vkey;
       plonkTallyVkey = CIRCUIT_INFO['2-1-1-5']['plonk']?.tally_vkey;
     }
-  } else if (Number(maxVoter) <= 625 && Number(maxOption) <= 25) {
+  } else if (maxVoter <= 625 && maxOption <= 25) {
     // state_tree_depth: 4
     // vote_option_tree_depth: 2
     parameters = CIRCUIT_INFO['4-2-2-25'].parameter;
@@ -114,7 +114,7 @@ export function getContractParams(
       plonkProcessVkey = CIRCUIT_INFO['4-2-2-25']['plonk']?.process_vkey;
       plonkTallyVkey = CIRCUIT_INFO['4-2-2-25']['plonk']?.tally_vkey;
     }
-  } else if (Number(maxVoter) <= 15625 && Number(maxOption) <= 125) {
+  } else if (maxVoter <= 15625 && maxOption <= 125) {
     // state_tree_depth: 6
     // vote_option_tree_depth: 3
     parameters = CIRCUIT_INFO['6-3-3-125'].parameter;
@@ -125,7 +125,7 @@ export function getContractParams(
       plonkProcessVkey = CIRCUIT_INFO['6-3-3-125']['plonk']?.process_vkey;
       plonkTallyVkey = CIRCUIT_INFO['6-3-3-125']['plonk']?.tally_vkey;
     }
-  } else if (Number(maxVoter) <= 1953125 && Number(maxOption) <= 125) {
+  } else if (maxVoter <= 1953125 && maxOption <= 125) {
     // state_tree_depth: 9
     // vote_option_tree_depth: 3
     parameters = CIRCUIT_INFO['9-4-3-625'].parameter;
@@ -184,4 +184,24 @@ export function getContractParams(
         maciCertSystem: '0',
       };
   }
+}
+
+export function getAMaciRoundCircuitFee(maxVoter: number, maxOption: number) {
+  let requiredFee = {
+    denom: 'peaka',
+    amount: '0',
+  };
+  if (maxVoter <= 25 && maxOption <= 5) {
+    // state_tree_depth: 2
+    // vote_option_tree_depth: 1
+    requiredFee.amount = '50000000000000000000';
+  } else if (maxVoter <= 625 && maxOption <= 25) {
+    // state_tree_depth: 4
+    // vote_option_tree_depth: 2
+    requiredFee.amount = '100000000000000000000';
+  } else {
+    throw new Error('Number of voters or options is too large.');
+  }
+
+  return requiredFee;
 }

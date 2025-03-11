@@ -36,7 +36,7 @@ async function main() {
     'dora1yttutgra9fhcn2yvrfa5g3f2tway3ggg0ehgc5egcvj3qd2yzm4qqztceg';
 
   const allowance = await client.maci.feegrantAllowance({
-    address: 'dora1y7ajuup8wc6x9d7svce3uza53e38ur3lxqpfzl',
+    address,
     contractAddress: RoundAddress,
   });
   console.log('allowance', allowance);

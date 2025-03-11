@@ -10,6 +10,8 @@ import {
   CircuitsResponse,
   ProofResponse,
   SignUpEventsResponse,
+  OperatorDelayOperationsResponse,
+  MissRateResponse,
 } from '../../types';
 import { IndexerParams } from './types';
 import { Http } from '../http';
@@ -153,6 +155,25 @@ export class Indexer {
    */
   async getOperatorByAddress(address: string): Promise<OperatorResponse> {
     return await this.operator.getOperatorByAddress(address);
+  }
+
+  async getOperatorDelayOperationsByAddress(
+    address: string,
+    after: string,
+    limit?: number
+  ): Promise<OperatorDelayOperationsResponse> {
+    return await this.operator.getOperatorDelayOperationsByAddress(
+      address,
+      after,
+      limit
+    );
+  }
+
+  async queryMissRate(
+    address: string,
+    durationDay: number
+  ): Promise<MissRateResponse> {
+    return await this.operator.queryMissRate(address, durationDay);
   }
 
   /**

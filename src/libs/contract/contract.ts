@@ -27,7 +27,11 @@ import {
   CreateMaciRoundParams,
   CreateOracleMaciRoundParams,
 } from './types';
-import { getCircuitType, getContractParams } from './utils';
+import {
+  getAMaciRoundCircuitFee,
+  getCircuitType,
+  getContractParams,
+} from './utils';
 import { QTR_LIB } from './vars';
 import { MaciRoundType, MaciCertSystemType } from '../../types';
 import { decompressPublicKey } from '../../utils';
@@ -82,26 +86,33 @@ export class Contract {
       contractAddress: this.registryAddress,
     });
 
+    const requiredFee = getAMaciRoundCircuitFee(maxVoter, maxOption);
+
     preDeactivateRoot = preDeactivateRoot || '0';
-    const res = await client.createRound({
-      operator,
-      preDeactivateRoot,
-      voiceCreditAmount,
-      whitelist,
-      roundInfo: {
-        title,
-        description: description || '',
-        link: link || '',
+    const res = await client.createRound(
+      {
+        operator,
+        preDeactivateRoot,
+        voiceCreditAmount,
+        whitelist,
+        roundInfo: {
+          title,
+          description: description || '',
+          link: link || '',
+        },
+        votingTime: {
+          start_time,
+          end_time,
+        },
+        maxVoter: maxVoter.toString(),
+        maxOption: maxOption.toString(),
+        certificationSystem: '0',
+        circuitType,
       },
-      votingTime: {
-        start_time,
-        end_time,
-      },
-      maxVoter,
-      maxOption,
-      certificationSystem: '0',
-      circuitType,
-    });
+      'auto',
+      undefined,
+      [requiredFee]
+    );
     let contractAddress = '';
     res.events.map((event) => {
       if (event.type === 'wasm') {
@@ -208,8 +219,8 @@ export class Contract {
       MaciRoundType.ORACLE_MACI,
       circuitType,
       MaciCertSystemType.GROTH16,
-      '0',
-      '0'
+      0,
+      0
     );
     const instantiateResponse = await client.instantiate(
       address,
