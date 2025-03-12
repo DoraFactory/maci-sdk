@@ -30,29 +30,29 @@ async function main() {
     'dora'
   );
 
-  // const newRound = await client.createAMaciRound({
-  //   signer: wallet,
-  //   startVoting: new Date(new Date().getTime()),
-  //   endVoting: new Date(new Date().getTime() + 15 * 60 * 1000),
-  //   title: 'new oracle maci round',
-  //   description: 'test',
-  //   link: 'test',
-  //   circuitType: MaciCircuitType.IP1V,
-  //   maxVoter: 2,
-  //   maxOption: 3,
-  //   operator: 'dora149n5yhzgk5gex0eqmnnpnsxh6ys4exg5xyqjzm',
-  //   whitelist: {
-  //     users: [
-  //       {
-  //         addr: 'dora1mnjacv0ckjrfewrphpz0ltlnkrzcthw0238k2x',
-  //       },
-  //     ],
-  //   },
-  //   voiceCreditAmount: '100',
-  // });
-  // console.log('newRound:', newRound);
+  const newRound = await client.createAMaciRound({
+    signer: wallet,
+    startVoting: new Date(new Date().getTime()),
+    endVoting: new Date(new Date().getTime() + 15 * 60 * 1000),
+    title: 'new oracle maci round',
+    description: 'test',
+    link: 'test',
+    circuitType: MaciCircuitType.IP1V,
+    maxVoter: 2,
+    maxOption: 3,
+    operator: 'dora149n5yhzgk5gex0eqmnnpnsxh6ys4exg5xyqjzm',
+    whitelist: {
+      users: [
+        {
+          addr: 'dora1mnjacv0ckjrfewrphpz0ltlnkrzcthw0238k2x',
+        },
+      ],
+    },
+    voiceCreditAmount: '100',
+  });
+  console.log('newRound:', newRound);
 
-  // await delay(10000);
+  await delay(10000);
   const isClaimable = await client.maci.queryRoundClaimable({
     contractAddress:
       'dora1kvvjekdt4xz8at036jxcdv45k5q3278sul7453a65wlqruft9nfq04gta4',

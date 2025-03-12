@@ -18,6 +18,7 @@ import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx.js';
 import { CertificateEcosystem, ErrorResponse } from '../../types';
 import { SignatureResponse } from '../oracle-certificate/types';
 import { OracleWhitelistConfig } from '../contract/ts/OracleMaci.types';
+import { getAMaciRoundCircuitFee } from '../contract/utils';
 
 export function isErrorResponse(response: unknown): response is ErrorResponse {
   return (
@@ -311,6 +312,17 @@ export class MACI {
         balance: null,
       };
     }
+  }
+
+  async queryAMaciChargeFee({
+    maxVoter,
+    maxOption,
+  }: {
+    maxVoter: number;
+    maxOption: number;
+  }) {
+    const fee = getAMaciRoundCircuitFee(maxVoter, maxOption);
+    return fee;
   }
 
   async queryRoundGasStation({ contractAddress }: { contractAddress: string }) {
