@@ -20,7 +20,7 @@ export interface InstantiateMsg {
   round_info: RoundInfo;
   voice_credit_amount: Uint256;
   voting_time: VotingTime;
-  whitelist?: Whitelist | null;
+  whitelist?: WhitelistBase | null;
 }
 export interface PubKey {
   x: Uint256;
@@ -41,10 +41,10 @@ export interface VotingTime {
   end_time: Timestamp;
   start_time: Timestamp;
 }
-export interface Whitelist {
-  users: WhitelistConfig[];
+export interface WhitelistBase {
+  users: WhitelistBaseConfig[];
 }
-export interface WhitelistConfig {
+export interface WhitelistBaseConfig {
   addr: Addr;
 }
 export type ExecuteMsg =
@@ -55,7 +55,7 @@ export type ExecuteMsg =
     }
   | {
       set_whitelists: {
-        whitelists: Whitelist;
+        whitelists: WhitelistBase;
       };
     }
   | {
@@ -129,22 +129,8 @@ export type ExecuteMsg =
       };
     }
   | {
-      grant: {
-        max_amount: Uint128;
-      };
-    }
-  | {
-      revoke: {};
-    }
-  | {
-      bond: {};
-    }
-  | {
-      withdraw: {
-        amount?: Uint128 | null;
-      };
+      claim: {};
     };
-export type Uint128 = string;
 export interface MessageData {
   data: [Uint256, Uint256, Uint256, Uint256, Uint256, Uint256, Uint256];
 }
@@ -212,7 +198,17 @@ export type QueryMsg =
       white_list: {};
     }
   | {
+      can_sign_up: {
+        sender: Addr;
+      };
+    }
+  | {
       is_white_list: {
+        sender: Addr;
+      };
+    }
+  | {
+      is_register: {
         sender: Addr;
       };
     }
@@ -238,7 +234,22 @@ export type QueryMsg =
     }
   | {
       query_pre_deactivate_root: {};
+    }
+  | {
+      get_delay_records: {};
     };
+export type Boolean = boolean;
+export type DelayType = 'deactivate_delay' | 'tally_delay';
+export interface DelayRecords {
+  records: DelayRecord[];
+}
+export interface DelayRecord {
+  delay_duration: number;
+  delay_process_dmsg_count: Uint256;
+  delay_reason: string;
+  delay_timestamp: Timestamp;
+  delay_type: DelayType;
+}
 export type PeriodStatus =
   | 'pending'
   | 'voting'
@@ -248,5 +259,12 @@ export type PeriodStatus =
 export interface Period {
   status: PeriodStatus;
 }
-export type Boolean = boolean;
+export type Uint128 = string;
 export type ArrayOfString = string[];
+export interface Whitelist {
+  users: WhitelistConfig[];
+}
+export interface WhitelistConfig {
+  addr: Addr;
+  is_register: boolean;
+}

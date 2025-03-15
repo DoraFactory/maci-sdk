@@ -726,4 +726,19 @@ export class MACI {
       fee
     );
   }
+
+  async claimAMaciRound({
+    signer,
+    contractAddress,
+  }: {
+    signer: OfflineSigner;
+    contractAddress: string;
+  }) {
+    const client = await this.contract.amaciClient({
+      signer,
+      contractAddress,
+    });
+
+    return client.claim();
+  }
 }

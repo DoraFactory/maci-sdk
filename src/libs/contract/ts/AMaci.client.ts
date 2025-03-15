@@ -20,17 +20,22 @@ import {
   MaciParameters,
   RoundInfo,
   VotingTime,
-  Whitelist,
-  WhitelistConfig,
+  WhitelistBase,
+  WhitelistBaseConfig,
   ExecuteMsg,
-  Uint128,
   MessageData,
   Groth16ProofType,
   QueryMsg,
+  Boolean,
+  DelayType,
+  DelayRecords,
+  DelayRecord,
   PeriodStatus,
   Period,
-  Boolean,
+  Uint128,
   ArrayOfString,
+  Whitelist,
+  WhitelistConfig,
 } from './AMaci.types';
 export interface AMaciReadOnlyInterface {
   contractAddress: string;
@@ -51,7 +56,9 @@ export interface AMaciReadOnlyInterface {
   getVoiceCreditBalance: ({ index }: { index: Uint256 }) => Promise<Uint256>;
   getVoiceCreditAmount: () => Promise<Uint256>;
   whiteList: () => Promise<Whitelist>;
+  canSignUp: ({ sender }: { sender: Addr }) => Promise<Boolean>;
   isWhiteList: ({ sender }: { sender: Addr }) => Promise<Boolean>;
+  isRegister: ({ sender }: { sender: Addr }) => Promise<Boolean>;
   signuped: ({ pubkeyX }: { pubkeyX: Uint256 }) => Promise<Uint256>;
   voteOptionMap: () => Promise<ArrayOfString>;
   maxVoteOptions: () => Promise<Uint256>;
@@ -59,6 +66,7 @@ export interface AMaciReadOnlyInterface {
   queryCircuitType: () => Promise<Uint256>;
   queryCertSystem: () => Promise<Uint256>;
   queryPreDeactivateRoot: () => Promise<Uint256>;
+  getDelayRecords: () => Promise<DelayRecords>;
 }
 export class AMaciQueryClient implements AMaciReadOnlyInterface {
   client: CosmWasmClient;
@@ -83,7 +91,9 @@ export class AMaciQueryClient implements AMaciReadOnlyInterface {
     this.getVoiceCreditBalance = this.getVoiceCreditBalance.bind(this);
     this.getVoiceCreditAmount = this.getVoiceCreditAmount.bind(this);
     this.whiteList = this.whiteList.bind(this);
+    this.canSignUp = this.canSignUp.bind(this);
     this.isWhiteList = this.isWhiteList.bind(this);
+    this.isRegister = this.isRegister.bind(this);
     this.signuped = this.signuped.bind(this);
     this.voteOptionMap = this.voteOptionMap.bind(this);
     this.maxVoteOptions = this.maxVoteOptions.bind(this);
@@ -91,6 +101,7 @@ export class AMaciQueryClient implements AMaciReadOnlyInterface {
     this.queryCircuitType = this.queryCircuitType.bind(this);
     this.queryCertSystem = this.queryCertSystem.bind(this);
     this.queryPreDeactivateRoot = this.queryPreDeactivateRoot.bind(this);
+    this.getDelayRecords = this.getDelayRecords.bind(this);
   }
   admin = async (): Promise<Addr> => {
     return this.client.queryContractSmart(this.contractAddress, {
@@ -187,9 +198,23 @@ export class AMaciQueryClient implements AMaciReadOnlyInterface {
       white_list: {},
     });
   };
+  canSignUp = async ({ sender }: { sender: Addr }): Promise<Boolean> => {
+    return this.client.queryContractSmart(this.contractAddress, {
+      can_sign_up: {
+        sender,
+      },
+    });
+  };
   isWhiteList = async ({ sender }: { sender: Addr }): Promise<Boolean> => {
     return this.client.queryContractSmart(this.contractAddress, {
       is_white_list: {
+        sender,
+      },
+    });
+  };
+  isRegister = async ({ sender }: { sender: Addr }): Promise<Boolean> => {
+    return this.client.queryContractSmart(this.contractAddress, {
+      is_register: {
         sender,
       },
     });
@@ -231,6 +256,11 @@ export class AMaciQueryClient implements AMaciReadOnlyInterface {
       query_pre_deactivate_root: {},
     });
   };
+  getDelayRecords = async (): Promise<DelayRecords> => {
+    return this.client.queryContractSmart(this.contractAddress, {
+      get_delay_records: {},
+    });
+  };
 }
 export interface AMaciInterface extends AMaciReadOnlyInterface {
   contractAddress: string;
@@ -249,7 +279,7 @@ export interface AMaciInterface extends AMaciReadOnlyInterface {
     {
       whitelists,
     }: {
-      whitelists: Whitelist;
+      whitelists: WhitelistBase;
     },
     fee?: number | StdFee | 'auto',
     memo?: string,
@@ -393,32 +423,7 @@ export interface AMaciInterface extends AMaciReadOnlyInterface {
     memo?: string,
     _funds?: Coin[]
   ) => Promise<ExecuteResult>;
-  grant: (
-    {
-      maxAmount,
-    }: {
-      maxAmount: Uint128;
-    },
-    fee?: number | StdFee | 'auto',
-    memo?: string,
-    _funds?: Coin[]
-  ) => Promise<ExecuteResult>;
-  revoke: (
-    fee?: number | StdFee | 'auto',
-    memo?: string,
-    _funds?: Coin[]
-  ) => Promise<ExecuteResult>;
-  bond: (
-    fee?: number | StdFee | 'auto',
-    memo?: string,
-    _funds?: Coin[]
-  ) => Promise<ExecuteResult>;
-  withdraw: (
-    {
-      amount,
-    }: {
-      amount?: Uint128;
-    },
+  claim: (
     fee?: number | StdFee | 'auto',
     memo?: string,
     _funds?: Coin[]
@@ -451,10 +456,7 @@ export class AMaciClient extends AMaciQueryClient implements AMaciInterface {
     this.stopProcessingPeriod = this.stopProcessingPeriod.bind(this);
     this.processTally = this.processTally.bind(this);
     this.stopTallyingPeriod = this.stopTallyingPeriod.bind(this);
-    this.grant = this.grant.bind(this);
-    this.revoke = this.revoke.bind(this);
-    this.bond = this.bond.bind(this);
-    this.withdraw = this.withdraw.bind(this);
+    this.claim = this.claim.bind(this);
   }
   setRoundInfo = async (
     {
@@ -483,7 +485,7 @@ export class AMaciClient extends AMaciQueryClient implements AMaciInterface {
     {
       whitelists,
     }: {
-      whitelists: Whitelist;
+      whitelists: WhitelistBase;
     },
     fee: number | StdFee | 'auto' = 'auto',
     memo?: string,
@@ -806,12 +808,7 @@ export class AMaciClient extends AMaciQueryClient implements AMaciInterface {
       _funds
     );
   };
-  grant = async (
-    {
-      maxAmount,
-    }: {
-      maxAmount: Uint128;
-    },
+  claim = async (
     fee: number | StdFee | 'auto' = 'auto',
     memo?: string,
     _funds?: Coin[]
@@ -820,64 +817,7 @@ export class AMaciClient extends AMaciQueryClient implements AMaciInterface {
       this.sender,
       this.contractAddress,
       {
-        grant: {
-          max_amount: maxAmount,
-        },
-      },
-      fee,
-      memo,
-      _funds
-    );
-  };
-  revoke = async (
-    fee: number | StdFee | 'auto' = 'auto',
-    memo?: string,
-    _funds?: Coin[]
-  ): Promise<ExecuteResult> => {
-    return await this.client.execute(
-      this.sender,
-      this.contractAddress,
-      {
-        revoke: {},
-      },
-      fee,
-      memo,
-      _funds
-    );
-  };
-  bond = async (
-    fee: number | StdFee | 'auto' = 'auto',
-    memo?: string,
-    _funds?: Coin[]
-  ): Promise<ExecuteResult> => {
-    return await this.client.execute(
-      this.sender,
-      this.contractAddress,
-      {
-        bond: {},
-      },
-      fee,
-      memo,
-      _funds
-    );
-  };
-  withdraw = async (
-    {
-      amount,
-    }: {
-      amount?: Uint128;
-    },
-    fee: number | StdFee | 'auto' = 'auto',
-    memo?: string,
-    _funds?: Coin[]
-  ): Promise<ExecuteResult> => {
-    return await this.client.execute(
-      this.sender,
-      this.contractAddress,
-      {
-        withdraw: {
-          amount,
-        },
+        claim: {},
       },
       fee,
       memo,
