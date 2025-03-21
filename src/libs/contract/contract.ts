@@ -126,7 +126,10 @@ export class Contract {
         }
       }
     });
-    return contractAddress;
+    return {
+      ...res,
+      contractAddress,
+    };
   }
 
   async createMaciRound({
