@@ -25,7 +25,8 @@
     "noEmit": false,
     "emitDeclarationOnly": true,
     "incremental": false,
-    "typeRoots": ["./src/types", "./node_modules/@types"]
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "allowImportingTsExtensions": true
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules", "dist"]

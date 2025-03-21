@@ -1,11 +1,8 @@
 import { randomBytes } from 'crypto';
-import {
-  babyJub,
-  eddsa,
-  poseidon,
-  poseidonEncrypt,
-  Tree,
-} from '@dorafactory/circomlib';
+
+import { babyjub, eddsa, poseidon } from 'circomlibjs';
+import * as poseidonCipher from './poseidon/poseidonCipher'; 
+import Tree from './tree';
 import { Scalar, utils } from 'ffjavascript';
 import createBlakeHash from 'blake-hash';
 import { solidityPackedSha256 } from 'ethers';
@@ -101,7 +98,7 @@ export const genEcdhSharedKey = (
   privKey: PrivateKey,
   pubKey: PublicKey
 ): PublicKey => {
-  const sharedKey = babyJub.mulPointEscalar(
+  const sharedKey = babyjub.mulPointEscalar(
     pubKey,
     formatPrivKeyForBabyJub(privKey)
   );
@@ -149,7 +146,7 @@ export const genMessageFactory =
 
     const command = [packaged, ...newPubKey, ...signature.R8, signature.S];
 
-    const message = poseidonEncrypt(
+    const message = poseidonCipher.encrypt(
       command,
       genEcdhSharedKey(encPriKey, coordPubKey),
       0n
@@ -220,13 +217,13 @@ const rerandomize = (
   ciphertext: { c1: bigint[]; c2: bigint[] },
   randomVal = genRandomKey()
 ) => {
-  const d1 = babyJub.addPoint(
-    babyJub.mulPointEscalar(babyJub.Base8, randomVal),
+  const d1 = babyjub.addPoint(
+    babyjub.mulPointEscalar(babyjub.Base8, randomVal),
     ciphertext.c1
   );
 
-  const d2 = babyJub.addPoint(
-    babyJub.mulPointEscalar(pubKey, randomVal),
+  const d2 = babyjub.addPoint(
+    babyjub.mulPointEscalar(pubKey, randomVal),
     ciphertext.c2
   );
 
