@@ -741,4 +741,9 @@ export class MACI {
 
     return client.claim();
   }
+
+  async getOracleCertificateConfig() {
+    const ecosystems = await this.oracleCertificate.listEcosystems();
+    return ecosystems;
+  }
 }

@@ -27,3 +27,21 @@ export type FeegrantAllowanceResponse = {
     amount: string;
   }[];
 };
+
+export interface SnapshotHeightInfo {
+  lowestHeight: string;
+  latestHeight: string;
+}
+
+export interface Ecosystem {
+  name: string;
+  displayName: string;
+  decimals: number;
+  apiPath: string;
+  snapshotHeightInfo: SnapshotHeightInfo;
+  baseSlope: number;
+}
+
+export interface EcosystemsResponse {
+  ecosystems: Ecosystem[];
+}

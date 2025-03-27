@@ -33,7 +33,7 @@ async function main() {
   const newRound = await client.createOracleMaciRound({
     signer: wallet,
     operatorPubkey:
-      '0d622736d5630a9e39a2998599bebf703a794978b64d30148cf7a15870f014fe2d79c78ccd5fffa53897b817075bdeef74a2ea9f244983d2f0829e19f44c59b5',
+      '1ba52e08674869d14714857081bc9059d19be089978717d5787f7f674defc9e62ca7180b7673b6755afdda4a84f6d7c2f32139d38955799afdd2df60ddf69583',
     startVoting: new Date(new Date().getTime()),
     endVoting: new Date(new Date().getTime() + 15 * 60 * 1000),
     title: 'new oracle maci round',

@@ -4,6 +4,7 @@ import {
   SignatureRequest,
   SignatureResponse,
   FeegrantAllowanceResponse,
+  EcosystemsResponse,
 } from './types';
 
 export class OracleCertificate {
@@ -48,5 +49,20 @@ export class OracleCertificate {
       grantee,
       spend_limit: response.allowance.allowance.allowance.spend_limit,
     };
+  }
+
+  async listEcosystems(): Promise<EcosystemsResponse> {
+    const response = await this.http.fetch(
+      `${this.certificateApiEndpoint}/list`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const signatureData = await response.json();
+
+    return signatureData;
   }
 }
