@@ -171,7 +171,7 @@ export class Contract {
       address,
       this.maciCodeId,
       {
-        round_info: { title, description, link },
+        round_info: { title, description: description || '', link: link || '' },
         voting_time: {
           start_time,
           end_time,

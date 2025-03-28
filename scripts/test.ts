@@ -14,7 +14,7 @@ function delay(ms: number) {
 
 async function main() {
   const client = new MaciClient({
-    network: 'testnet',
+    network: 'mainnet',
   });
 
   console.log('======= start test contract logic =======');
@@ -37,8 +37,6 @@ async function main() {
     startVoting: new Date(new Date().getTime()),
     endVoting: new Date(new Date().getTime() + 15 * 60 * 1000),
     title: 'new oracle maci round',
-    description: 'test',
-    link: 'test',
     voteOptionMap: ['option1: A', 'option2: B', 'option3: C'],
     circuitType: MaciCircuitType.IP1V,
     whitelistEcosystem: 'doravota',
